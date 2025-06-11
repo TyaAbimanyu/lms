@@ -1,48 +1,52 @@
 <template>
   <div class="card border border-gray-100 course-card">
-    <div class="card-body p-8">
+    <div class="card-body p-4">
       <router-link
         :to="course.link"
-        class="course-image-container bg-main-100 rounded-8 overflow-hidden text-center mb-8 flex-center"
+        class="bg-main-100 rounded-8 overflow-hidden text-center mb-4 h-120 flex-center p-6"
       >
-        <img :src="course.image" :alt="course.title" class="course-image" />
+        <img :src="course.image" :alt="course.title" />
       </router-link>
-      <div class="p-8">
+      <div class="p-4">
         <span :class="course.categoryClass">{{ course.category }}</span>
-        <h5 class="mb-0">
+        <p>
           <router-link :to="course.link" class="hover-text-main-600">{{
-            course.title
+            truncateText(course.title)
           }}</router-link>
-        </h5>
+        </p>
 
-        <div class="flex-align gap-8 flex-wrap mt-16">
-          <div>
-            <img
-              :src="course.creatorImage"
-              class="w-32 h-32 rounded-circle object-fit-cover"
-              alt="Creator"
-            />
-            <button @click="toggleFavorite" aria-label="Favorite">
-              <i
-                :class="[
-                  'ph-fill',
-                  'ph-heart',
-                  isFavorite ? 'text-danger-600' : 'text-gray-400',
-                ]"
-                style="font-size: 24px"
-              ></i>
-            </button>
+        <div class="flex-align gap-4 mt-8">
+          <span class="text-main-600 flex-shrink-0 text-13 fw-medium"
+            >{{ course.progress }}%</span
+          >
+          <div class="progress w-100 bg-main-100 rounded-pill h-8">
+            <div
+              class="progress-bar bg-main-600 rounded-pill"
+              :style="{ width: `${course.progress}%` }"
+            ></div>
           </div>
-          <div>
-            <span class="text-gray-600 text-13">
-              Created by
-              <router-link
-                to="/profile"
-                class="fw-semibold text-gray-700 hover-text-main-600 hover-text-decoration-underline"
-              >
-                {{ course.creator }}
-              </router-link>
-            </span>
+        </div>
+
+        <div class="flex-align gap-4 flex-wrap mt-12">
+          <img
+            :src="course.creatorImage"
+            class="w-24 h-24 rounded-circle object-fit-cover"
+            alt="Creator"
+          />
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="d-flex gap-8 align-items-center">
+              <div>
+                <span class="text-gray-600 text-13">
+                  Created by
+                  <router-link
+                    to="/profile"
+                    class="fw-semibold text-gray-700 hover-text-main-600 hover-text-decoration-underline"
+                  >
+                    {{ course.creator }}
+                  </router-link>
+                </span>
+              </div>
+            </div>
             <div class="flex-align gap-4">
               <span class="text-15 fw-bold text-warning-600 d-flex"
                 ><i class="ph-fill ph-star"></i
@@ -52,17 +56,9 @@
             </div>
           </div>
         </div>
-
-        <div class="row justify-content-between align-items-center mt-3">
-          <div class="col-auto">40 Hours {{ course.duration }}</div>
-          <div class="col-auto d-flex align-items-center gap-2">
-            <Star :size="18" weight="fill" class="text-warning-600" />
-            <span class="fw-bold text-gray-700">{{ course.rating }}</span>
-          </div>
-        </div>
         <router-link
           to="/live-class"
-          class="btn btn-primary rounded-pill py-9 w-100 mt-24"
+          class="btn-primary btn-outline-main rounded-pill py-6 w-100 mt-16 text-center"
         >
           Continue Watching
         </router-link>
@@ -72,35 +68,28 @@
 </template>
 
 <script setup>
-import { PhStar as Star } from "@phosphor-icons/vue";
-
 defineProps({
   course: {
     type: Object,
     required: true,
   },
 });
+
+function truncateText(text, maxLength = 25) {
+  if (!text) return "";
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+}
 </script>
 
 <style scoped>
 .course-card {
-  width: 100%;
-  height: 550px;
+  max-width: 320px;
 }
 
-.course-image-container {
-  width: 100%;
-  height: 180px;
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.course-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+@media screen and (max-width: 768px) {
+  .course-card {
+    max-width: 90%;
+    margin: 0 auto;
+  }
 }
 </style>

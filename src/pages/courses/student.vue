@@ -14,15 +14,11 @@
     </ul>
 
     <!-- START SECTION COURSES -->
-    <div class="tab-content">
+    <div class="m-8">
       <div v-for="tab in tabs" :key="tab.id">
         <div v-if="activeTab === tab.id" class="tab-pane fade show active">
-          <div class="row g-20">
-            <div
-              v-for="(course, idx) in tab.content"
-              :key="idx"
-              class="col-xxl-3 col-lg-4 col-sm-6"
-            >
+          <div class="responsive-grid">
+            <div v-for="(course, idx) in tab.content" :key="idx">
               <CourseCard :course="formatCourseData(course)" />
             </div>
           </div>
@@ -78,13 +74,12 @@
           </div>
         </div>
 
-        <div class="row g-20">
-          <div
-            v-for="(course, index) in filteredAndSortedCourses"
-            :key="index"
-            class="col-xxl-3 col-lg-4 col-sm-6"
-          >
-            <CourseCardRecomendation :course="formatCourseData(course)" />
+        <!-- Mengganti bagian rekomendasi courses -->
+        <div class="m-8">
+          <div class="responsive-grid">
+            <div v-for="(course, idx) in filteredAndSortedCourses" :key="idx">
+              <CourseCardRecomendation :course="formatCourseData(course)" />
+            </div>
           </div>
         </div>
       </div>
@@ -109,7 +104,7 @@ const tabs = [
         title: "Full Stack Web Development",
         category: "Development",
         categoryBadgeClass: badgeClass("Development"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "image.png",
         progress: 32,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -120,7 +115,62 @@ const tabs = [
         title: "UI/UX Design Course",
         category: "Design",
         categoryBadgeClass: badgeClass("Design"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "image2.png",
+        progress: 20,
+        userImage: "src/assets/images/avatar/avatar-group1.png",
+        creator: "Albert James",
+        rating: 4.9,
+        reviews: "12k",
+      },
+      {
+        title: "UI/UX Design Course",
+        category: "Design",
+        categoryBadgeClass: badgeClass("Design"),
+        image: "image2.png",
+        progress: 20,
+        userImage: "src/assets/images/avatar/avatar-group1.png",
+        creator: "Albert James",
+        rating: 4.9,
+        reviews: "12k",
+      },
+      {
+        title: "UI/UX Design Course",
+        category: "Design",
+        categoryBadgeClass: badgeClass("Design"),
+        image: "image2.png",
+        progress: 20,
+        userImage: "src/assets/images/avatar/avatar-group1.png",
+        creator: "Albert James",
+        rating: 4.9,
+        reviews: "12k",
+      },
+      {
+        title: "UI/UX Design Course",
+        category: "Design",
+        categoryBadgeClass: badgeClass("Design"),
+        image: "image2.png",
+        progress: 20,
+        userImage: "src/assets/images/avatar/avatar-group1.png",
+        creator: "Albert James",
+        rating: 4.9,
+        reviews: "12k",
+      },
+      {
+        title: "UI/UX Design Course",
+        category: "Learning",
+        categoryBadgeClass: badgeClass("Learning"),
+        image: "src/assets/images/dummy/dummy.png",
+        progress: 20,
+        userImage: "src/assets/images/avatar/avatar-group1.png",
+        creator: "Albert James",
+        rating: 4.9,
+        reviews: "12k",
+      },
+      {
+        title: "UI/UX Design Course",
+        category: "Learning",
+        categoryBadgeClass: badgeClass("Learning"),
+        image: "src/assets/images/dummy/dummy.png",
         progress: 20,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -138,7 +188,7 @@ const tabs = [
         title: "Full Stack Web Development",
         category: "Design",
         categoryBadgeClass: badgeClass("Design"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "src/assets/images/dummy/dummy.png",
         progress: 32,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -149,7 +199,7 @@ const tabs = [
         title: "UI/UX Design Course",
         category: "Development",
         categoryBadgeClass: badgeClass("Development"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "src/assets/images/dummy/dummy.png",
         progress: 20,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -166,7 +216,7 @@ const tabs = [
         title: "Full Stack Web Development",
         category: "Marketing",
         categoryBadgeClass: badgeClass("Marketing"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "src/assets/images/dummy/dummy.png",
         progress: 32,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -177,7 +227,7 @@ const tabs = [
         title: "UI/UX Design Course",
         category: "Design",
         categoryBadgeClass: badgeClass("Development"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "src/assets/images/dummy/dummy.png",
         progress: 20,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -194,7 +244,7 @@ const tabs = [
         title: "Full Stack Web Marketing",
         category: "Development",
         categoryBadgeClass: badgeClass("Development"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "src/assets/images/dummy/dummy.png",
         progress: 32,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -205,7 +255,7 @@ const tabs = [
         title: "UI/UX Design Course",
         category: "Learning",
         categoryBadgeClass: badgeClass("Learning"),
-        image: "src/assets/images/dummy/dummyCourse400x200.png",
+        image: "src/assets/images/dummy/dummy.png",
         progress: 20,
         userImage: "src/assets/images/avatar/avatar-group1.png",
         creator: "Albert James",
@@ -236,30 +286,83 @@ const categories = ["Development", "Design", "Frontend", "SEO"];
 
 const recommendedCourses = ref([
   {
-    title: "Full Stack Web Development",
+    title: "Advanced JavaScript Development",
     category: "Development",
-    image: "src/assets/images/dummy/dummyCourse400x200.png",
+    image: "src/assets/images/dummy/dummy.png",
+    progress: 0,
     userImage: "src/assets/images/avatar/avatar-group1.png",
-    creator: "Albert James",
-    rating: 4.9,
-    reviews: 12000,
+    creator: "John Smith",
+    rating: 4.8,
+    reviews: "8.5k",
     popularity: 95,
-    latest: "2025-06-10",
+    latest: "2024-01-15",
+    trending: 88,
+  },
+  {
+    title: "UI/UX Design Masterclass De",
+    category: "Design",
+    image: "src/assets/images/dummy/dummy.png",
+    progress: 0,
+    userImage: "src/assets/images/avatar/avatar-group1.png",
+    creator: "Sarah Johnson",
+    rating: 4.9,
+    reviews: "10k",
+    popularity: 92,
+    latest: "2024-01-10",
+    trending: 95,
+  },
+  {
+    title: "React Native Mobile Development",
+    category: "Development",
+    image: "src/assets/images/dummy/dummy.png",
+    progress: 0,
+    userImage: "src/assets/images/avatar/avatar-group1.png",
+    creator: "Mike Anderson",
+    rating: 4.7,
+    reviews: "6.2k",
+    popularity: 88,
+    latest: "2024-01-05",
+    trending: 90,
+  },
+  {
+    title: "Frontend Development with Vue.js",
+    category: "Frontend",
+    image: "src/assets/images/dummy/dummy.png",
+    progress: 0,
+    userImage: "src/assets/images/avatar/avatar-group1.png",
+    creator: "Emily Chen",
+    rating: 4.9,
+    reviews: "7.8k",
+    popularity: 91,
+    latest: "2024-01-08",
     trending: 87,
   },
   {
-    title: "Design System",
-    category: "Design",
-    image: "src/assets/images/dummy/dummyCourse400x200.png",
+    title: "SEO Optimization Techniques",
+    category: "SEO",
+    image: "src/assets/images/dummy/dummy.png",
+    progress: 0,
     userImage: "src/assets/images/avatar/avatar-group1.png",
-    creator: "Albert James",
-    rating: 4.8,
-    reviews: 8500,
-    popularity: 90,
-    latest: "2025-05-01",
-    trending: 90,
+    creator: "David Wilson",
+    rating: 4.6,
+    reviews: "5.5k",
+    popularity: 85,
+    latest: "2024-01-12",
+    trending: 82,
   },
-  // Tambah course lain sesuai kebutuhan
+  {
+    title: "Web Design Principles",
+    category: "Design",
+    image: "src/assets/images/dummy/dummy.png",
+    progress: 0,
+    userImage: "src/assets/images/avatar/avatar-group1.png",
+    creator: "Lisa Brown",
+    rating: 4.8,
+    reviews: "9.1k",
+    popularity: 89,
+    latest: "2024-01-03",
+    trending: 86,
+  },
 ]);
 
 const filteredAndSortedCourses = computed(() => {
@@ -320,5 +423,48 @@ function formatCourseData(course) {
   width: 400px;
   height: 200px;
   object-fit: cover;
+}
+.responsive-grid {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .responsive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .responsive-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Menambahkan breakpoint untuk 1920x1080 */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+  .responsive-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Untuk layar yang lebih besar dari 1920px */
+@media screen and (min-width: 1921px) {
+  .responsive-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
 }
 </style>
