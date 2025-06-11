@@ -56,8 +56,10 @@
             </div>
           </div>
         </div>
+
+        <!-- TODO: Link ini akan mempunyai id yang dinamis sesuai course yang sedang ditonton -->
         <router-link
-          to="/live-class"
+          to="/live-class-courses"
           class="btn-primary btn-outline-main rounded-pill py-6 w-100 mt-16 text-center"
         >
           Continue Watching

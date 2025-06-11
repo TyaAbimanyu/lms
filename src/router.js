@@ -19,6 +19,7 @@ import ProjectManagement from './pages/dashboard/projectManagement.vue'
 
 // Student
 import StudentCourses from './pages/courses/student.vue'
+import LiveClass from './pages/courses/live-class.vue'
 
 // Ui Component
 import Typography from './pages/uiComponent/typography.vue'
@@ -164,21 +165,21 @@ import PaymentGateway from './pages/settings/payment-gateway.vue'
 const routes = [
 
   // DashBoard section Route
-  { path: '/', component: Ai },
-  { path: '/crm', component: Crm },
-  { path: '/eCommerce', component: ECommerce },
-  { path: '/cryptocurrency', component: Cryptocurrency },
-  { path: '/investment', component: Investment },
-  { path: '/lms', component: Lms },
-  { path: '/nft-gaming', component: NFTgaming },
-  { path: '/medical', component: Medical },
-  { path: '/analytics', component: Analytics },
-  { path: '/pos-inventory', component: PosInventory },
-  { path: '/finance-banking', component: FinanceBanking },
-  { path: '/booking-system', component: BookingSystem },
-  { path: '/help-desk', component: HelpDesk },
-  { path: '/podcast', component: Podcast },
-  { path: '/project-management', component: ProjectManagement },
+  // { path: '/', component: Ai },
+  // { path: '/crm', component: Crm },
+  // { path: '/eCommerce', component: ECommerce },
+  // { path: '/cryptocurrency', component: Cryptocurrency },
+  // { path: '/investment', component: Investment },
+  { path: '/', component: Lms },
+  // { path: '/nft-gaming', component: NFTgaming },
+  // { path: '/medical', component: Medical },
+  // { path: '/analytics', component: Analytics },
+  // { path: '/pos-inventory', component: PosInventory },
+  // { path: '/finance-banking', component: FinanceBanking },
+  // { path: '/booking-system', component: BookingSystem },
+  // { path: '/help-desk', component: HelpDesk },
+  // { path: '/podcast', component: Podcast },
+  // { path: '/project-management', component: ProjectManagement },
 
   // Email Section Route
   { path: '/email', component: Email },
@@ -187,6 +188,7 @@ const routes = [
 
   //Student Section Route
   { path: '/student-courses', component: StudentCourses },
+  { path: '/live-class-courses', component: LiveClass },
 
   // Chat Section Route
   { path: '/chat-message', component: ChatMessage },
