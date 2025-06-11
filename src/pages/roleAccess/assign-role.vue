@@ -8,15 +8,10 @@
         <AssignRole />
     </div>
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
-import AssignRole from '@/components/RoleAccess/AssignRole.vue'
+import AssignRole from '@/components/RoleAccess/AssignRole.vue';
 
-export default {
-    name: "RolesAssign",
-    components: {
-        Breadcrumb,
-        AssignRole
-    },
-}
+// Define component name
+const componentName = "RolesAssign";
 </script>

@@ -131,63 +131,55 @@
     </div>
   </template>
   
-  <script>
+  <script setup>
   import Quill from "quill";
   import { ref, onMounted } from "vue";
   
-  export default {
-    name: "AddPost",
-    setup() {
-      const form = ref({
-        title: "",
-        category: "Technology",
-        description: "",
-        thumbnail: null,
-      });
+  // Define component name
+  const componentName = "AddPost";
   
-      const imagePreview = ref(null);
+  // Reactive data
+  const form = ref({
+    title: "",
+    category: "Technology",
+    description: "",
+    thumbnail: null,
+  });
   
-      const handleSubmit = () => {
-        console.log("Form Data:", form.value);
-        // Submit your form data to the server
-      };
+  const imagePreview = ref(null);
   
-      const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          const src = URL.createObjectURL(file);
-          imagePreview.value = src;
-        }
-      };
-  
-      const removeImage = () => {
-        imagePreview.value = null;
-        form.value.thumbnail = null;
-      };
-  
-      onMounted(() => {
-        // Initialize Quill editor
-        new Quill("#editor", {
-          modules: {
-            toolbar: "#toolbar-container",
-          },
-          theme: "snow",
-          placeholder: "Compose an epic...",
-        });
-      });
-  
-      return {
-        form,
-        imagePreview,
-        handleSubmit,
-        handleFileChange,
-        removeImage,
-      };
-    },
+  // Methods
+  const handleSubmit = () => {
+    console.log("Form Data:", form.value);
+    // Submit your form data to the server
   };
+  
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const src = URL.createObjectURL(file);
+      imagePreview.value = src;
+    }
+  };
+  
+  const removeImage = () => {
+    imagePreview.value = null;
+    form.value.thumbnail = null;
+  };
+  
+  // Lifecycle hooks
+  onMounted(() => {
+    // Initialize Quill editor
+    new Quill("#editor", {
+      modules: {
+        toolbar: "#toolbar-container",
+      },
+      theme: "snow",
+      placeholder: "Compose an epic...",
+    });
+  });
   </script>
   
   <style scoped>
   /* Add your styles here */
   </style>
-  

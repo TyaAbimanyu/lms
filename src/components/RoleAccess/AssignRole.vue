@@ -90,7 +90,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import user1 from '@/assets/images/user-list/user-list1.png'
 import user2 from '@/assets/images/user-list/user-list2.png'
 import user3 from '@/assets/images/user-list/user-list3.png'
@@ -102,79 +102,82 @@ import user8 from '@/assets/images/user-list/user-list8.png'
 import user10 from '@/assets/images/user-list/user-list10.png'
 
 import Pagination from '@/components/pagination/index.vue'
+import { ref, computed, watch } from 'vue';
 
-export default {
-  name: 'UserRoleTable',
-  components: { Pagination },
-  data() {
-    return {
-      currentPage: 1,
-      rolesPerPage: 10,
-      searchQuery: '',
-      statusFilter: '',
-      selectAll: false,
-      selectedUsers: [],
-      roleOptions: ['Waiter', 'Manager', 'Project Manager', 'Game Developer', 'Head', 'Management'],
-      roles: [
-        { id: 1, name: 'Kathryn Murphy', role: 'Waiter', isActive: true, image: user1 },
-        { id: 2, name: 'Annette Black', role: 'Manager', isActive: true, image: user2 },
-        { id: 3, name: 'Ronald Richards', role: 'Project Manager', isActive: false, image: user3 },
-        { id: 4, name: 'Eleanor Pena', role: 'Game Developer', isActive: true, image: user4 },
-        { id: 5, name: 'Leslie Alexander', role: 'Head', isActive: false, image: user5 },
-        { id: 6, name: 'Albert Flores', role: 'Management', isActive: false, image: user6 },
-        { id: 7, name: 'Jacob Jones', role: 'Waiter', isActive: false, image: user7 },
-        { id: 8, name: 'Jerome Bell', role: 'Waiter', isActive: false, image: user8 },
-        { id: 9, name: 'Marvin McKinney', role: 'Waiter', isActive: false, image: user2 },
-        { id: 10, name: 'Cameron Williamson', role: 'Admin', isActive: false, image: user10 },
-        { id: 11, name: 'Williamson', role: 'Admin', isActive: false, image: user1 },
-      ]
-    };
-  },
-  computed: {
-    filteredRoles() {
-      return this.roles.filter(role => {
-        const matchSearch = this.searchQuery === '' || role.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-        const matchStatus = this.statusFilter === '' || (this.statusFilter === 'Active' && role.isActive) || (this.statusFilter === 'Inactive' && !role.isActive);
-        return matchSearch && matchStatus;
-      });
-    },
-    paginatedRoles() {
-      const start = (this.currentPage - 1) * this.rolesPerPage;
-      return this.filteredRoles.slice(start, start + this.rolesPerPage);
-    },
-    totalPages() {
-      return Math.ceil(this.filteredRoles.length / this.rolesPerPage);
-    },
-    startIndex() {
-      return (this.currentPage - 1) * this.rolesPerPage;
-    },
-    endIndex() {
-      return Math.min(this.startIndex + this.rolesPerPage, this.filteredRoles.length);
-    }
-  },
-  watch: {
-    selectedUsers() {
-      this.selectAll = this.paginatedRoles.every(user => this.selectedUsers.includes(user.id));
-    }
-  },
-  methods: {
-    changePage(page) {
-      this.currentPage = page;
-      this.selectAll = this.paginatedRoles.every(user => this.selectedUsers.includes(user.id));
-    },
-    toggleSelectAll() {
-      if (this.selectAll) {
-        this.selectedUsers = this.paginatedRoles.map(user => user.id);
-      } else {
-        this.selectedUsers = this.selectedUsers.filter(id => !this.paginatedRoles.some(u => u.id === id));
-      }
-    },
-    assignRole(userId, role) {
-      const index = this.roles.findIndex(u => u.id === userId);
-      if (index !== -1) {
-        this.roles.splice(index, 1, { ...this.roles[index], role });
-      }
-    }
+// Define component name
+const componentName = 'UserRoleTable';
+
+// Reactive state
+const currentPage = ref(1);
+const rolesPerPage = ref(10);
+const searchQuery = ref('');
+const statusFilter = ref('');
+const selectAll = ref(false);
+const selectedUsers = ref([]);
+const roleOptions = ref(['Waiter', 'Manager', 'Project Manager', 'Game Developer', 'Head', 'Management']);
+const roles = ref([
+  { id: 1, name: 'Kathryn Murphy', role: 'Waiter', isActive: true, image: user1 },
+  { id: 2, name: 'Annette Black', role: 'Manager', isActive: true, image: user2 },
+  { id: 3, name: 'Ronald Richards', role: 'Project Manager', isActive: false, image: user3 },
+  { id: 4, name: 'Eleanor Pena', role: 'Game Developer', isActive: true, image: user4 },
+  { id: 5, name: 'Leslie Alexander', role: 'Head', isActive: false, image: user5 },
+  { id: 6, name: 'Albert Flores', role: 'Management', isActive: false, image: user6 },
+  { id: 7, name: 'Jacob Jones', role: 'Waiter', isActive: false, image: user7 },
+  { id: 8, name: 'Jerome Bell', role: 'Waiter', isActive: false, image: user8 },
+  { id: 9, name: 'Marvin McKinney', role: 'Waiter', isActive: false, image: user2 },
+  { id: 10, name: 'Cameron Williamson', role: 'Admin', isActive: false, image: user10 },
+  { id: 11, name: 'Williamson', role: 'Admin', isActive: false, image: user1 },
+]);
+
+// Computed properties
+const filteredRoles = computed(() => {
+  return roles.value.filter(role => {
+    const matchSearch = searchQuery.value === '' || role.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchStatus = statusFilter.value === '' || (statusFilter.value === 'Active' && role.isActive) || (statusFilter.value === 'Inactive' && !role.isActive);
+    return matchSearch && matchStatus;
+  });
+});
+
+const paginatedRoles = computed(() => {
+  const start = (currentPage.value - 1) * rolesPerPage.value;
+  return filteredRoles.value.slice(start, start + rolesPerPage.value);
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredRoles.value.length / rolesPerPage.value);
+});
+
+const startIndex = computed(() => {
+  return (currentPage.value - 1) * rolesPerPage.value;
+});
+
+const endIndex = computed(() => {
+  return Math.min(startIndex.value + rolesPerPage.value, filteredRoles.value.length);
+});
+
+// Watch
+watch(selectedUsers, () => {
+  selectAll.value = paginatedRoles.value.every(user => selectedUsers.value.includes(user.id));
+});
+
+// Methods
+const changePage = (page) => {
+  currentPage.value = page;
+  selectAll.value = paginatedRoles.value.every(user => selectedUsers.value.includes(user.id));
+};
+
+const toggleSelectAll = () => {
+  if (selectAll.value) {
+    selectedUsers.value = paginatedRoles.value.map(user => user.id);
+  } else {
+    selectedUsers.value = selectedUsers.value.filter(id => !paginatedRoles.value.some(u => u.id === id));
+  }
+};
+
+const assignRole = (userId, role) => {
+  const index = roles.value.findIndex(u => u.id === userId);
+  if (index !== -1) {
+    roles.value.splice(index, 1, { ...roles.value[index], role });
   }
 };
 </script>

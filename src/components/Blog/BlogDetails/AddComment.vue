@@ -42,29 +42,27 @@
     </div>
   </template>
   
-  <script>
-  export default {
-    name: "AddCommentForm",
-    data() {
-      return {
-        form: {
-          username: "",
-          email: "",
-          desc: ""
-        }
-      };
-    },
-    methods: {
-      submitComment() {
-        // Handle form submission logic here
-        console.log("Form submitted:", this.form);
-  
-        // Clear the form (optional)
-        this.form.username = "";
-        this.form.email = "";
-        this.form.desc = "";
-      }
-    }
-  };
-  </script>
-  
+  <script setup>
+import { reactive } from 'vue';
+
+// Define component name
+const componentName = "AddCommentForm";
+
+// Reactive form data
+const form = reactive({
+  username: "",
+  email: "",
+  desc: ""
+});
+
+// Methods
+const submitComment = () => {
+  // Handle form submission logic here
+  console.log("Form submitted:", form);
+
+  // Clear the form (optional)
+  form.username = "";
+  form.email = "";
+  form.desc = "";
+};
+</script>

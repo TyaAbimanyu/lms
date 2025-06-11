@@ -157,82 +157,90 @@
     </div>
 </template>
 
-<script>
-import Pagination from '@/components/pagination/index.vue'
-export default {
-    name: 'Role',
-    components: { Pagination },
-    data() {
-        return {
-            selectAll: false,
-            currentPage: 1,
-            rolesPerPage: 10,
-            searchQuery: "",
-            statusFilter: "Status",
-            roles: [
-                { id: '01', createDate: "25 Jan 2024", name: "Test", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true },
-                { id: '02', createDate: "25 Jan 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Inactive", isVisible: true },
-                { id: '03', createDate: "10 Feb 2024", name: "Manager", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-                { id: '04', createDate: "10 Feb 2024", name: "Project Manager", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-                { id: '05', createDate: "15 March 2024", name: "Game Developer", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Inactive", isVisible: true, },
-                { id: '06', createDate: "15 March 2024", name: "Head", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-                { id: '07', createDate: "27 April 2024", name: "Management", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-                { id: '08', createDate: "27 April 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Inactive", isVisible: true, },
-                { id: '09', createDate: "30 April 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-                { id: 10, createDate: "30 April 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-                { id: 11, createDate: "10 Feb 2024", name: "Manager", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
-            ],
-            newRole: {
-                name: "",
-                description: "",
-                status: "Active", // Default status
-            },
-            selectedRoles: [],
-        };
-    },
-    computed: {
-        filteredRoles() {
-            return this.roles.filter(role => {
-                return (this.statusFilter === 'Status' || role.status === this.statusFilter) &&
-                    (role.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || role.description.toLowerCase().includes(this.searchQuery.toLowerCase()));
-            });
-        },
-        totalPages() {
-            return Math.ceil(this.filteredRoles.length / this.rolesPerPage);
-        },
-        startIndex() {
-            return (this.currentPage - 1) * this.rolesPerPage;
-        },
-        endIndex() {
-            return Math.min(this.startIndex + this.rolesPerPage, this.filteredRoles.length);
-        },
-        paginatedRoles() {
-            return this.filteredRoles.slice(this.startIndex, this.endIndex);
-        },
-    },
-    methods: {
-        toggleSelectAll() {
-            if (this.selectAll) {
-                this.selectedRoles = this.paginatedRoles.map(role => role.id);
-            } else {
-                this.selectedRoles = [];
-            }
-        },
-        removeRole(index) {
-            this.roles[index].isVisible = false;
-        },
-        saveNewRole() {
-            this.roles.push({
-                ...this.newRole,
-                id: this.roles.length + 1,
-                createDate: new Date().toLocaleDateString(),
-                isVisible: true,
-            });
-            this.newRole = { name: "", description: "", status: "Active" };
-        },
-        changePage(pageNumber) {
-            this.currentPage = pageNumber;
-        },
-    },
+<script setup>
+import Pagination from '@/components/pagination/index.vue';
+import { ref, computed } from 'vue';
+
+// Define component name
+const componentName = 'Role';
+
+// Reactive state
+const selectAll = ref(false);
+const currentPage = ref(1);
+const rolesPerPage = ref(10);
+const searchQuery = ref("");
+const statusFilter = ref("Status");
+const roles = ref([
+    { id: '01', createDate: "25 Jan 2024", name: "Test", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true },
+    { id: '02', createDate: "25 Jan 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Inactive", isVisible: true },
+    { id: '03', createDate: "10 Feb 2024", name: "Manager", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+    { id: '04', createDate: "10 Feb 2024", name: "Project Manager", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+    { id: '05', createDate: "15 March 2024", name: "Game Developer", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Inactive", isVisible: true, },
+    { id: '06', createDate: "15 March 2024", name: "Head", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+    { id: '07', createDate: "27 April 2024", name: "Management", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+    { id: '08', createDate: "27 April 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Inactive", isVisible: true, },
+    { id: '09', createDate: "30 April 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+    { id: 10, createDate: "30 April 2024", name: "Waiter", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+    { id: 11, createDate: "10 Feb 2024", name: "Manager", description: "Lorem Ipsum is simply dummy text of the printing and typesetting", status: "Active", isVisible: true, },
+]);
+
+const newRole = ref({
+    name: "",
+    description: "",
+    status: "Active", // Default status
+});
+
+const selectedRoles = ref([]);
+
+// Computed properties
+const filteredRoles = computed(() => {
+    return roles.value.filter(role => {
+        return (statusFilter.value === 'Status' || role.status === statusFilter.value) &&
+            (role.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+             role.description.toLowerCase().includes(searchQuery.value.toLowerCase()));
+    });
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(filteredRoles.value.length / rolesPerPage.value);
+});
+
+const startIndex = computed(() => {
+    return (currentPage.value - 1) * rolesPerPage.value;
+});
+
+const endIndex = computed(() => {
+    return Math.min(startIndex.value + rolesPerPage.value, filteredRoles.value.length);
+});
+
+const paginatedRoles = computed(() => {
+    return filteredRoles.value.slice(startIndex.value, endIndex.value);
+});
+
+// Methods
+const toggleSelectAll = () => {
+    if (selectAll.value) {
+        selectedRoles.value = paginatedRoles.value.map(role => role.id);
+    } else {
+        selectedRoles.value = [];
+    }
+};
+
+const removeRole = (index) => {
+    roles.value[index].isVisible = false;
+};
+
+const saveNewRole = () => {
+    roles.value.push({
+        ...newRole.value,
+        id: roles.value.length + 1,
+        createDate: new Date().toLocaleDateString(),
+        isVisible: true,
+    });
+    newRole.value = { name: "", description: "", status: "Active" };
+};
+
+const changePage = (pageNumber) => {
+    currentPage.value = pageNumber;
 };
 </script>

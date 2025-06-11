@@ -1,12 +1,9 @@
 <template>
     <Forgotpassword />
 </template>
-<script>
-import Forgotpassword from '@/components/Authentication/ForgotPassword.vue'
-export default {
-    name: "ForgotPassword",
-    components: {
-        Forgotpassword,
-    },
-}
+<script setup>
+import Forgotpassword from '@/components/Authentication/ForgotPassword.vue';
+
+// Define component name
+const componentName = "ForgotPassword";
 </script>

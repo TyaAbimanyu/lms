@@ -63,20 +63,19 @@
     </section>
   </template>
   
-  <script>
-  export default {
-    name: 'ForgotPassword',
-    data() {
-      return {
-        email: ''
-      };
-    },
-    methods: {
-      openModal() {
-        const modal = new bootstrap.Modal(this.$refs.emailModal);
-        modal.show();
-      }
-    }
-  };
-  </script>
-  
+  <script setup>
+import { ref } from 'vue';
+
+// Define component name
+const componentName = 'ForgotPassword';
+
+// Reactive state
+const email = ref('');
+const emailModal = ref(null);
+
+// Methods
+const openModal = () => {
+  const modal = new bootstrap.Modal(emailModal.value);
+  modal.show();
+};
+</script>
