@@ -39,49 +39,52 @@
   import user3 from "@/assets/images/users/user3.png"
   import user4 from "@/assets/images/users/user4.png"
   import user5 from "@/assets/images/users/user5.png"
+  import { ref } from 'vue'
 
 export default {
   name: 'TopInstructors',
-  data() {
+  setup() {
+    const instructors = ref([
+      {
+        name: 'Dianne Russell',
+        agentId: '36254',
+        image: user1,
+        reviews: 25
+      },
+      {
+        name: 'Wade Warren',
+        agentId: '36254',
+        image: user2,
+        reviews: 25
+      },
+      {
+        name: 'Albert Flores',
+        agentId: '36254',
+        image: user3,
+        reviews: 25
+      },
+      {
+        name: 'Bessie Cooper',
+        agentId: '36254',
+        image: user4,
+        reviews: 25
+      },
+      {
+        name: 'Arlene McCoy',
+        agentId: '36254',
+        image: user5,
+        reviews: 25
+      },
+      {
+        name: 'Arlene McCoy',
+        agentId: '36254',
+        image: user1,
+        reviews: 25
+      }
+    ])
+    
     return {
-      instructors: [
-        {
-          name: 'Dianne Russell',
-          agentId: '36254',
-          image: user1,
-          reviews: 25
-        },
-        {
-          name: 'Wade Warren',
-          agentId: '36254',
-          image: user2,
-          reviews: 25
-        },
-        {
-          name: 'Albert Flores',
-          agentId: '36254',
-          image: user3,
-          reviews: 25
-        },
-        {
-          name: 'Bessie Cooper',
-          agentId: '36254',
-          image: user4,
-          reviews: 25
-        },
-        {
-          name: 'Arlene McCoy',
-          agentId: '36254',
-          image: user5,
-          reviews: 25
-        },
-        {
-          name: 'Arlene McCoy',
-          agentId: '36254',
-          image: user1,
-          reviews: 25
-        }
-      ]
+      instructors
     }
   }
 }

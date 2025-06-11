@@ -55,53 +55,57 @@
   </template>
   
   <script>
+  import { ref } from 'vue'
+
   export default {
     name: "CoursesTable",
-    data() {
+    setup() {
+      const courses = ref([
+        {
+          registeredOn: "24 Jun 2024",
+          instructor: "Ronald Richards",
+          name: "3d Illustration & Art Design",
+          lessons: 34,
+          enrolled: 257,
+          price: "$29.00",
+        },
+        {
+          registeredOn: "24 Jun 2024",
+          instructor: "Jerome Bell",
+          name: "Advanced JavaScript Development",
+          lessons: 20,
+          enrolled: 375,
+          price: "$29.00",
+        },
+        {
+          registeredOn: "24 Jun 2024",
+          instructor: "Cody Fisher",
+          name: "Portrait Drawing Fundamentals",
+          lessons: 16,
+          enrolled: 220,
+          price: "$29.00",
+        },
+        {
+          registeredOn: "24 Jun 2024",
+          instructor: "Floyd Miles",
+          name: "Advanced App Development",
+          lessons: 25,
+          enrolled: 57,
+          price: "$29.00",
+        },
+        {
+          registeredOn: "24 Jun 2024",
+          instructor: "Ralph Edwards",
+          name: "HTML Fundamental Course",
+          lessons: 17,
+          enrolled: 27,
+          price: "$29.00",
+        },
+      ]);
+
       return {
-        courses: [
-          {
-            registeredOn: "24 Jun 2024",
-            instructor: "Ronald Richards",
-            name: "3d Illustration & Art Design",
-            lessons: 34,
-            enrolled: 257,
-            price: "$29.00",
-          },
-          {
-            registeredOn: "24 Jun 2024",
-            instructor: "Jerome Bell",
-            name: "Advanced JavaScript Development",
-            lessons: 20,
-            enrolled: 375,
-            price: "$29.00",
-          },
-          {
-            registeredOn: "24 Jun 2024",
-            instructor: "Cody Fisher",
-            name: "Portrait Drawing Fundamentals",
-            lessons: 16,
-            enrolled: 220,
-            price: "$29.00",
-          },
-          {
-            registeredOn: "24 Jun 2024",
-            instructor: "Floyd Miles",
-            name: "Advanced App Development",
-            lessons: 25,
-            enrolled: 57,
-            price: "$29.00",
-          },
-          {
-            registeredOn: "24 Jun 2024",
-            instructor: "Ralph Edwards",
-            name: "HTML Fundamental Course",
-            lessons: 17,
-            enrolled: 27,
-            price: "$29.00",
-          },
-        ],
+        courses
       };
-    },
+    }
   };
   </script>

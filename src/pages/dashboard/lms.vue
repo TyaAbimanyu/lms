@@ -36,7 +36,8 @@
 
     </div>
 </template>
-<script>
+
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
 import ApexCharts from "vue3-apexcharts";
 import { Icon } from "@iconify/vue"; 
@@ -48,19 +49,6 @@ import StudentProgress from "@/components/dashboard/Lms/StudentProgress.vue"
 import Courses from "@/components/dashboard/Lms/Courses.vue"
 import CourseActivityChart from "@/components/dashboard/Lms/CourseActivityChart.vue"
 
-export default {
-  name: "Lms",
-  components: {
-    Breadcrumb,
-    apexchart: ApexCharts,
-    Icon,
-    EnrollmentRate,
-    TrafficSources,
-    Categories,
-    Instructors,
-    StudentProgress,
-    Courses,
-    CourseActivityChart,
-  },
-};
+// No need to define components or name in Vue 3 Composition API with <script setup>
+// Components are automatically registered from imports
 </script>

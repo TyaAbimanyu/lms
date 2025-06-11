@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import icon1 from "@/assets/images/home-six/category-icon1.png"
 import icon2 from "@/assets/images/home-six/category-icon2.png"
 import icon3 from "@/assets/images/home-six/category-icon3.png"
@@ -43,49 +43,42 @@ import icon4 from "@/assets/images/home-six/category-icon4.png"
 import icon5 from "@/assets/images/home-six/category-icon5.png"
 import icon6 from "@/assets/images/home-six/category-icon6.png"
 
-export default {
-  name: "TopCategoriesCard",
-  data() {
-    return {
-      categories: [
-        {
-          title: "Web Development",
-          courses: "40+ Courses",
-          image: icon1,
-          bgColor: "bg-info-50",
-        },
-        {
-          title: "Graphic Design",
-          courses: "40+ Courses",
-          image: icon2,
-          bgColor: "bg-success-50",
-        },
-        {
-          title: "UI/UX Design",
-          courses: "40+ Courses",
-          image: icon3,
-          bgColor: "bg-lilac-50",
-        },
-        {
-          title: "Digital Marketing",
-          courses: "40+ Courses",
-          image: icon4,
-          bgColor: "bg-warning-50",
-        },
-        {
-          title: "3d Illustration & Art Design",
-          courses: "40+ Courses",
-          image: icon5,
-          bgColor: "bg-danger-50",
-        },
-        {
-          title: "Logo Design",
-          courses: "40+ Courses",
-          image: icon6,
-          bgColor: "bg-primary-50",
-        }
-      ]
-    };
+const categories = [
+  {
+    title: "Web Development",
+    courses: "40+ Courses",
+    image: icon1,
+    bgColor: "bg-info-50",
+  },
+  {
+    title: "Graphic Design",
+    courses: "40+ Courses",
+    image: icon2,
+    bgColor: "bg-success-50",
+  },
+  {
+    title: "UI/UX Design",
+    courses: "40+ Courses",
+    image: icon3,
+    bgColor: "bg-lilac-50",
+  },
+  {
+    title: "Digital Marketing",
+    courses: "40+ Courses",
+    image: icon4,
+    bgColor: "bg-warning-50",
+  },
+  {
+    title: "3d Illustration & Art Design",
+    courses: "40+ Courses",
+    image: icon5,
+    bgColor: "bg-danger-50",
+  },
+  {
+    title: "Logo Design",
+    courses: "40+ Courses",
+    image: icon6,
+    bgColor: "bg-primary-50",
   }
-};
+];
 </script>

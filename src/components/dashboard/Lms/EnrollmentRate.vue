@@ -113,92 +113,89 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ApexCharts from 'apexcharts';
+import { onMounted } from 'vue';
 
-export default {
-  name: 'DashboardStats',
-  mounted() {
-    this.createChartTwo('enrollmentChart', '#45B369', '#487fff');
-  },
-  methods: {
-    createChartTwo(chartId, color1, color2) {
-      const options = {
-        series: [
-          { name: 'series1', data: [48, 35, 55, 32, 48, 30, 55, 50, 57] },
-          { name: 'series2', data: [12, 20, 15, 26, 22, 60, 40, 48, 25] },
-        ],
-        legend: { show: false },
-        chart: {
-          type: 'area',
-          width: '100%',
-          height: 270,
-          toolbar: { show: false },
-          padding: { left: 0, right: 0, top: 0, bottom: 0 }
-        },
-        dataLabels: { enabled: false },
-        stroke: {
-          curve: 'smooth',
-          width: 3,
-          colors: [color1, color2],
-          lineCap: 'round'
-        },
-        grid: {
-          show: true,
-          borderColor: '#D1D5DB',
-          strokeDashArray: 1,
-          position: 'back',
-          xaxis: { lines: { show: false } },
-          yaxis: { lines: { show: true } },
-          row: { opacity: 0.5 },
-          column: { opacity: 0.5 },
-          padding: { top: -20, right: 0, bottom: -10, left: 0 }
-        },
-        colors: [color1, color2],
-        fill: {
-          type: 'gradient',
-          colors: [color1, color2],
-          gradient: {
-            shade: 'light',
-            type: 'vertical',
-            shadeIntensity: 0.5,
-            gradientToColors: [undefined, `${color2}00`],
-            inverseColors: false,
-            opacityFrom: [0.4, 0.4],
-            opacityTo: [0.3, 0.3],
-            stops: [0, 100]
-          }
-        },
-        markers: {
-          colors: [color1, color2],
-          strokeWidth: 3,
-          size: 0,
-          hover: { size: 10 }
-        },
-        xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          labels: {
-            formatter: value => value,
-            style: { fontSize: "14px" }
-          },
-          tooltip: { enabled: false }
-        },
-        yaxis: {
-          min:0,
-          max:70,
-          labels: {
-            formatter: value => "$" + value + "k",
-            style: { fontSize: "14px" }
-          }
-        },
-        tooltip: {
-          x: { format: 'dd/MM/yy HH:mm' }
-        }
-      };
-
-      const chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
-      chart.render();
+const createChartTwo = (chartId, color1, color2) => {
+  const options = {
+    series: [
+      { name: 'series1', data: [48, 35, 55, 32, 48, 30, 55, 50, 57] },
+      { name: 'series2', data: [12, 20, 15, 26, 22, 60, 40, 48, 25] },
+    ],
+    legend: { show: false },
+    chart: {
+      type: 'area',
+      width: '100%',
+      height: 270,
+      toolbar: { show: false },
+      padding: { left: 0, right: 0, top: 0, bottom: 0 }
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      curve: 'smooth',
+      width: 3,
+      colors: [color1, color2],
+      lineCap: 'round'
+    },
+    grid: {
+      show: true,
+      borderColor: '#D1D5DB',
+      strokeDashArray: 1,
+      position: 'back',
+      xaxis: { lines: { show: false } },
+      yaxis: { lines: { show: true } },
+      row: { opacity: 0.5 },
+      column: { opacity: 0.5 },
+      padding: { top: -20, right: 0, bottom: -10, left: 0 }
+    },
+    colors: [color1, color2],
+    fill: {
+      type: 'gradient',
+      colors: [color1, color2],
+      gradient: {
+        shade: 'light',
+        type: 'vertical',
+        shadeIntensity: 0.5,
+        gradientToColors: [undefined, `${color2}00`],
+        inverseColors: false,
+        opacityFrom: [0.4, 0.4],
+        opacityTo: [0.3, 0.3],
+        stops: [0, 100]
+      }
+    },
+    markers: {
+      colors: [color1, color2],
+      strokeWidth: 3,
+      size: 0,
+      hover: { size: 10 }
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      labels: {
+        formatter: value => value,
+        style: { fontSize: "14px" }
+      },
+      tooltip: { enabled: false }
+    },
+    yaxis: {
+      min:0,
+      max:70,
+      labels: {
+        formatter: value => "$" + value + "k",
+        style: { fontSize: "14px" }
+      }
+    },
+    tooltip: {
+      x: { format: 'dd/MM/yy HH:mm' }
     }
-  }
+  };
+
+  const chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
+  chart.render();
 };
+
+onMounted(() => {
+  createChartTwo('enrollmentChart', '#45B369', '#487fff');
+});
 </script>

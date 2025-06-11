@@ -58,74 +58,78 @@
   import student4 from "@/assets/images/home-six/student-img4.png"
   import student5 from "@/assets/images/home-six/student-img5.png"
   import student6 from "@/assets/images/home-six/student-img6.png"
+  import { ref, onMounted } from 'vue'
 
   export default {
     name: "StudentsProgress",
-    data() {
-      return {
-        radius: 35,
-        students: [
-          {
-            name: "Theresa Webb",
-            course: "UI/UX Design Course",
-            img: student1,
-            percentage: 33,
-            offset: 2 * Math.PI * 35,
-          },
-          {
-            name: "Robert Fox",
-            course: "Graphic Design Course",
-            img: student2,
-            percentage: 70,
-            offset: 2 * Math.PI * 35,
-          },
-          {
-            name: "Guy Hawkins",
-            course: "Web developer Course",
-            img: student3,
-            percentage: 80,
-            offset: 2 * Math.PI * 35,
-          },
-          {
-            name: "Cody Fisher",
-            course: "UI/UX Design Course",
-            img: student4,
-            percentage: 20,
-            offset: 2 * Math.PI * 35,
-          },
-          {
-            name: "Jacob Jones",
-            course: "UI/UX Design Course",
-            img: student5,
-            percentage: 40,
-            offset: 2 * Math.PI * 35,
-          },
-          {
-            name: "Darlene Robertson",
-            course: "UI/UX Design Course",
-            img: student6,
-            percentage: 24,
-            offset: 2 * Math.PI * 35,
-          },
-        ],
-      };
-    },
-    mounted() {
-      this.animateProgress();
-    },
-    methods: {
-      calculateOffset(percentage) {
-        const circumference = 2 * Math.PI * this.radius;
+    setup() {
+      const radius = 35;
+      const students = ref([
+        {
+          name: "Theresa Webb",
+          course: "UI/UX Design Course",
+          img: student1,
+          percentage: 33,
+          offset: 2 * Math.PI * 35,
+        },
+        {
+          name: "Robert Fox",
+          course: "Graphic Design Course",
+          img: student2,
+          percentage: 70,
+          offset: 2 * Math.PI * 35,
+        },
+        {
+          name: "Guy Hawkins",
+          course: "Web developer Course",
+          img: student3,
+          percentage: 80,
+          offset: 2 * Math.PI * 35,
+        },
+        {
+          name: "Cody Fisher",
+          course: "UI/UX Design Course",
+          img: student4,
+          percentage: 20,
+          offset: 2 * Math.PI * 35,
+        },
+        {
+          name: "Jacob Jones",
+          course: "UI/UX Design Course",
+          img: student5,
+          percentage: 40,
+          offset: 2 * Math.PI * 35,
+        },
+        {
+          name: "Darlene Robertson",
+          course: "UI/UX Design Course",
+          img: student6,
+          percentage: 24,
+          offset: 2 * Math.PI * 35,
+        },
+      ]);
+
+      const calculateOffset = (percentage) => {
+        const circumference = 2 * Math.PI * radius;
         return ((100 - percentage) / 100) * circumference;
-      },
-      animateProgress() {
-        this.students.forEach((student, index) => {
+      };
+
+      const animateProgress = () => {
+        students.value.forEach((student, index) => {
           setTimeout(() => {
-            student.offset = this.calculateOffset(student.percentage);
+            student.offset = calculateOffset(student.percentage);
           }, 100); // small delay for smooth transition
         });
-      },
-    },
+      };
+
+      onMounted(() => {
+        animateProgress();
+      });
+
+      return {
+        radius,
+        students
+      };
+    }
   };
   </script>
-  

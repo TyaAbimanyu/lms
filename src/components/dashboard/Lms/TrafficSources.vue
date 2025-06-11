@@ -41,59 +41,57 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ApexCharts from 'apexcharts';
+import { onMounted } from 'vue';
 
-export default {
-  name: 'UserOverviewDonutChart',
-  mounted() {
-    const options = {
-      series: [500, 500, 500],
-      colors: ['#FF9F29', '#487FFF', '#E4F1FF'],
-      labels: ['Active', 'New', 'Total'],
-      legend: {
-        show: false
+onMounted(() => {
+  const options = {
+    series: [500, 500, 500],
+    colors: ['#FF9F29', '#487FFF', '#E4F1FF'],
+    labels: ['Active', 'New', 'Total'],
+    legend: {
+      show: false
+    },
+    chart: {
+      type: 'donut',
+      height: 270,
+      sparkline: {
+        enabled: true
       },
-      chart: {
-        type: 'donut',
-        height: 270,
-        sparkline: {
-          enabled: true
+      margin: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      }
+    },
+    stroke: {
+      width: 0
+    },
+    dataLabels: {
+      enabled: false
+    },
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
         },
-        margin: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        },
-        padding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
+        legend: {
+          position: 'bottom'
         }
-      },
-      stroke: {
-        width: 0
-      },
-      dataLabels: {
-        enabled: false
-      },
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200
-          },
-          legend: {
-            position: 'bottom'
-          }
-        }
-      }]
-    };
+      }
+    }]
+  };
 
-    const chart = new ApexCharts(document.querySelector("#userOverviewDonutChart"), options);
-    chart.render();
-  }
-};
+  const chart = new ApexCharts(document.querySelector("#userOverviewDonutChart"), options);
+  chart.render();
+});
 </script>
