@@ -338,3 +338,8 @@
         </div>
     </div>
 </template>
+
+<script setup>
+// Define component name
+const componentName = "PaginationData";
+</script>

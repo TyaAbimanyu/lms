@@ -190,39 +190,38 @@
     </div>
   </template>
   
-  <script>
-  import user1 from "@/assets/images/user-grid/user-grid-img13.png";
+  <script setup>
+import user1 from "@/assets/images/user-grid/user-grid-img13.png";
+import { ref, reactive } from 'vue';
 
-  export default {
-    data() {
-      return {
-        activeTab: 'edit-profile',
-        profileImage: user1,
-        passwordVisible: false,
-        notifications: {
-          companzNew: { name: 'Company News', enabled: false },
-          pushNotifcation: { name: 'Push Notification', enabled: true },
-          weeklyLetters: { name: 'Weekly News Letters', enabled: true },
-          meetUp: { name: 'Meetups Near you', enabled: false },
-          orderNotification: { name: 'Orders Notifications', enabled: true },
-        },
-      };
-    },
-    methods: {
-      onImageChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = e => {
-            this.profileImage = e.target.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      },
-      togglePassword() {
-        this.passwordVisible = !this.passwordVisible;
-      },
-    },
-  };
-  </script>
-  
+// Define component name
+const componentName = "ViewProfileComponent";
+
+// Reactive state
+const activeTab = ref('edit-profile');
+const profileImage = ref(user1);
+const passwordVisible = ref(false);
+const notifications = reactive({
+  companzNew: { name: 'Company News', enabled: false },
+  pushNotifcation: { name: 'Push Notification', enabled: true },
+  weeklyLetters: { name: 'Weekly News Letters', enabled: true },
+  meetUp: { name: 'Meetups Near you', enabled: false },
+  orderNotification: { name: 'Orders Notifications', enabled: true },
+});
+
+// Methods
+const onImageChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      profileImage.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const togglePassword = () => {
+  passwordVisible.value = !passwordVisible.value;
+};
+</script>

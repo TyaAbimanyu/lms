@@ -8,15 +8,12 @@
         <UserList />
     </div>
 </template>
-<script>
+<script setup>
+// import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
+// import UserList from '@/components/Users/UserList.vue'
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
-import UserList from '@/components/Users/UserList.vue'
+import UserList from '@/components/Users/UserList.vue';
 
-export default {
-    name: "UsersList",
-    components: {
-        Breadcrumb,
-        UserList,
-    },
-}
+// Define component name
+const componentName = "UsersList";
 </script>

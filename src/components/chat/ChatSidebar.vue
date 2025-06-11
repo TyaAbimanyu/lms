@@ -74,175 +74,173 @@
     </div>
   </template>
   
-  <script>
-  import chatUser2 from "@/assets/images/chat/2.png"
-  import chatUser3 from "@/assets/images/chat/3.png"
-  import chatUser4 from "@/assets/images/chat/4.png"
-  import chatUser5 from "@/assets/images/chat/5.png"
-  import chatUser6 from "@/assets/images/chat/6.png"
-  import chatUser7 from "@/assets/images/chat/7.png"
-  import chatUser8 from "@/assets/images/chat/8.png"
-  import chatUser9 from "@/assets/images/chat/9.png"
-  import chatUser10 from "@/assets/images/chat/10.png"
-  export default {
-    name: "ChatSidebar",
-    data() {
-      return {
-        searchQuery: "",
-        users: [
-          {
-            name: "Kathryn Murphy",
-            message: "hey! there i'm...",
-            image: chatUser2,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "James Michael",
-            message: "hey! there i'm...",
-            image: chatUser3,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Russell Lucas",
-            message: "hey! there i'm...",
-            image: chatUser4,
-            time: "12:30 PM",
-            unread: 8,
-            active: false,
-          },
-          {
-            name: "Caleb Bradley",
-            message: "hey! there i'm...",
-            image: chatUser5,
-            time: "12:30 PM",
-            unread: 8,
-            active: false,
-          },
-          {
-            name: "Bobby Roy",
-            message: "hey! there i'm...",
-            image: chatUser6,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Vincent Liam",
-            message: "hey! there i'm...",
-            image: chatUser7,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Randy Mason",
-            message: "hey! there i'm...",
-            image: chatUser8,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Albert Wayne",
-            message: "hey! there i'm...",
-            image: chatUser9,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Elijah Willie",
-            message: "hey! there i'm...",
-            image: chatUser10,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Kathryn Murphy",
-            message: "hey! there i'm...",
-            image: chatUser2,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "James Michael",
-            message: "hey! there i'm...",
-            image: chatUser3,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Russell Lucas",
-            message: "hey! there i'm...",
-            image: chatUser4,
-            time: "12:30 PM",
-            unread: 8,
-            active: false,
-          },
-          {
-            name: "Caleb Bradley",
-            message: "hey! there i'm...",
-            image: chatUser5,
-            time: "12:30 PM",
-            unread: 8,
-            active: false,
-          },
-          {
-            name: "Bobby Roy",
-            message: "hey! there i'm...",
-            image: chatUser6,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Vincent Liam",
-            message: "hey! there i'm...",
-            image: chatUser7,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Randy Mason",
-            message: "hey! there i'm...",
-            image: chatUser8,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Albert Wayne",
-            message: "hey! there i'm...",
-            image: chatUser9,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-          {
-            name: "Elijah Willie",
-            message: "hey! there i'm...",
-            image: chatUser10,
-            time: "12:30 PM",
-            unread: 8,
-            active: true,
-          },
-        ],
-      };
-    },
-    computed: {
-      filteredUsers() {
-        const query = this.searchQuery.toLowerCase();
-        return this.users.filter((u) => u.name.toLowerCase().includes(query));
-      },
-    },
-  };
+<script setup>
+import chatUser2 from "@/assets/images/chat/2.png"
+import chatUser3 from "@/assets/images/chat/3.png"
+import chatUser4 from "@/assets/images/chat/4.png"
+import chatUser5 from "@/assets/images/chat/5.png"
+import chatUser6 from "@/assets/images/chat/6.png"
+import chatUser7 from "@/assets/images/chat/7.png"
+import chatUser8 from "@/assets/images/chat/8.png"
+import chatUser9 from "@/assets/images/chat/9.png"
+import chatUser10 from "@/assets/images/chat/10.png"
+import { ref, computed } from 'vue';
+
+// Define component name
+const componentName = "ChatSidebar";
+
+// Reactive data
+const searchQuery = ref("");
+const users = ref([
+  {
+    name: "Kathryn Murphy",
+    message: "hey! there i'm...",
+    image: chatUser2,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "James Michael",
+    message: "hey! there i'm...",
+    image: chatUser3,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Russell Lucas",
+    message: "hey! there i'm...",
+    image: chatUser4,
+    time: "12:30 PM",
+    unread: 8,
+    active: false,
+  },
+  {
+    name: "Caleb Bradley",
+    message: "hey! there i'm...",
+    image: chatUser5,
+    time: "12:30 PM",
+    unread: 8,
+    active: false,
+  },
+  {
+    name: "Bobby Roy",
+    message: "hey! there i'm...",
+    image: chatUser6,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Vincent Liam",
+    message: "hey! there i'm...",
+    image: chatUser7,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Randy Mason",
+    message: "hey! there i'm...",
+    image: chatUser8,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Albert Wayne",
+    message: "hey! there i'm...",
+    image: chatUser9,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Elijah Willie",
+    message: "hey! there i'm...",
+    image: chatUser10,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Kathryn Murphy",
+    message: "hey! there i'm...",
+    image: chatUser2,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "James Michael",
+    message: "hey! there i'm...",
+    image: chatUser3,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Russell Lucas",
+    message: "hey! there i'm...",
+    image: chatUser4,
+    time: "12:30 PM",
+    unread: 8,
+    active: false,
+  },
+  {
+    name: "Caleb Bradley",
+    message: "hey! there i'm...",
+    image: chatUser5,
+    time: "12:30 PM",
+    unread: 8,
+    active: false,
+  },
+  {
+    name: "Bobby Roy",
+    message: "hey! there i'm...",
+    image: chatUser6,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Vincent Liam",
+    message: "hey! there i'm...",
+    image: chatUser7,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Randy Mason",
+    message: "hey! there i'm...",
+    image: chatUser8,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Albert Wayne",
+    message: "hey! there i'm...",
+    image: chatUser9,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+  {
+    name: "Elijah Willie",
+    message: "hey! there i'm...",
+    image: chatUser10,
+    time: "12:30 PM",
+    unread: 8,
+    active: true,
+  },
+]);
+
+// Computed properties
+const filteredUsers = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return users.value.filter((u) => u.name.toLowerCase().includes(query));
+});
   </script>
-  

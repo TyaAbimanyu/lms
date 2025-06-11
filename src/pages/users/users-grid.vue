@@ -8,15 +8,10 @@
         <UserGrid />
     </div>
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
 import UserGrid from '@/components/Users/UserGrid.vue'
 
-export default {
-    name: "UsersGrid",
-    components: {
-        Breadcrumb,
-        UserGrid,
-    },
-}
+// Define component name
+const componentName = "UsersGrid";
 </script>

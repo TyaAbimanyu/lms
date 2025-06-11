@@ -111,7 +111,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import user1 from "@/assets/images/user-list/user-list1.png"
 import user2 from "@/assets/images/user-list/user-list2.png"
 import user3 from "@/assets/images/user-list/user-list3.png"
@@ -123,219 +123,227 @@ import user8 from "@/assets/images/user-list/user-list8.png"
 import user10 from "@/assets/images/user-list/user-list10.png"
 
 import Pagination from '@/components/pagination/index.vue'
+import { ref, computed, watch } from 'vue';
 
-export default {
-    name: "UserTable",
-    components: { Pagination },
-    data() {
-        return {
-            users: [
-                {
-                    sl: "01",
-                    joinDate: "25 Jan 2024",
-                    name: "Kathryn Murphy",
-                    email: "osgoodwy@gmail.com",
-                    department: "HR",
-                    designation: "Manager",
-                    status: "Active",
-                    avatar: user1,
-                    hidden: false,
-                },
-                {
-                    sl: "02",
-                    joinDate: "25 Jan 2024",
-                    name: "Annette Black",
-                    email: "redaniel@gmail.com",
-                    department: "Design",
-                    designation: "UI UX Designer",
-                    status: "Inactive",
-                    avatar: user2,
-                    hidden: false,
-                },
-                {
-                    sl: "03",
-                    joinDate: "10 Feb 2024",
-                    name: "Ronald Richards",
-                    email: "seannand@mail.ru",
-                    department: "Design",
-                    designation: "UI UX Designer",
-                    status: "Active",
-                    avatar: user3,
-                    hidden: false,
-                },
-                {
-                    sl: "04",
-                    joinDate: "10 Feb 2024",
-                    name: "Eleanor Pena",
-                    email: "miyokoto@mail.ru",
-                    department: "Design",
-                    designation: "UI UX Designer",
-                    status: "Active",
-                    avatar: user4,
-                    hidden: false,
-                },
-                {
-                    sl: "05",
-                    joinDate: "15 March 2024",
-                    name: "Leslie Alexander",
-                    email: "icadahli@gmail.com",
-                    department: "Design",
-                    designation: "UI UX Designer",
-                    status: "Inactive",
-                    avatar: user5,
-                    hidden: false,
-                },
-                {
-                    sl: "06",
-                    joinDate: "15 March 2024",
-                    name: "Albert Flores",
-                    email: "warn@mail.ru",
-                    department: "Design",
-                    designation: "UI UX Designer",
-                    status: "Active",
-                    avatar: user6,
-                    hidden: false,
-                },
-                {
-                    sl: "07",
-                    joinDate: "27 April 2024",
-                    name: "Jacob Jones",
-                    email: "zitka@mail.ru",
-                    department: "Development",
-                    designation: "Frontend developer",
-                    status: "Active",
-                    avatar: user7,
-                    hidden: false,
-                },
-                {
-                    sl: "08",
-                    joinDate: "25 Jan 2024",
-                    name: "Jerome Bell",
-                    email: "igerrin@gmail.com",
-                    department: "Development",
-                    designation: "Frontend developer",
-                    status: "Inactive",
-                    avatar: user8,
-                    hidden: false,
-                },
-                {
-                    sl: "09",
-                    joinDate: "30 April 2024",
-                    name: "Marvin McKinney",
-                    email: "maka@yandex.ru",
-                    department: "Development",
-                    designation: "Frontend developer",
-                    status: "Active",
-                    avatar: user2,
-                    hidden: false,
-                },
-                {
-                    sl: "10",
-                    joinDate: "30 April 2024",
-                    name: "Cameron Williamson",
-                    email: "danten@mail.ru",
-                    department: "Development",
-                    designation: "Frontend developer",
-                    status: "Active",
-                    avatar: user10,
-                    hidden: false,
-                },
-                {
-                    sl: "11",
-                    joinDate: "30 April 2024",
-                    name: "Marvin McKinney",
-                    email: "maka@yandex.ru",
-                    department: "Development",
-                    designation: "Frontend developer",
-                    status: "Active",
-                    avatar: user2,
-                    hidden: false,
-                },
-            ],
-            selectedUsers: [],
-            searchQuery: '',
-            selectedStatus: 'Status',
-            entriesPerPage: 10,
-            currentPage: 1,
-        };
-    },
-    computed: {
-        selectAll: {
-            get() {
-                return this.filteredUsers.length > 0 &&
-                    this.selectedUsers.length === this.filteredUsers.length;
-            },
-            set(value) {
-                if (value) {
-                    this.selectedUsers = [...this.filteredUsers];
-                } else {
-                    this.selectedUsers = [];
-                }
-            }
-        },
-        filteredUsers() {
-            let filtered = this.users.filter(user => {
-                const matchesSearch = user.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    user.email.toLowerCase().includes(this.searchQuery.toLowerCase());
-                const matchesStatus = this.selectedStatus === 'Status' || user.status === this.selectedStatus;
-                return matchesSearch && matchesStatus && !user.hidden;
-            });
+// Define component name
+const componentName = "UserTable";
 
-            this.totalFiltered = filtered.length;
-            const start = (this.currentPage - 1) * this.entriesPerPage;
-            return filtered.slice(start, start + this.entriesPerPage);
-        },
-        totalEntries() {
-            return this.users.filter(user => {
-                const matchesSearch = user.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    user.email.toLowerCase().includes(this.searchQuery.toLowerCase());
-                const matchesStatus = this.selectedStatus === 'Status' || user.status === this.selectedStatus;
-                return matchesSearch && matchesStatus && !user.hidden;
-            }).length;
-        },
-        totalPages() {
-            return Math.ceil(this.totalEntries / this.entriesPerPage);
-        },
-        startIndex() {
-            return (this.currentPage - 1) * this.entriesPerPage + 1;
-        },
-        endIndex() {
-            return Math.min(this.startIndex + this.entriesPerPage - 1, this.totalEntries);
-        }
+// Reactive data
+const users = ref([
+    {
+        sl: "01",
+        joinDate: "25 Jan 2024",
+        name: "Kathryn Murphy",
+        email: "osgoodwy@gmail.com",
+        department: "HR",
+        designation: "Manager",
+        status: "Active",
+        avatar: user1,
+        hidden: false,
     },
-    watch: {
-        searchQuery() {
-            this.currentPage = 1;
-        },
-        selectedStatus() {
-            this.currentPage = 1;
-        },
-        entriesPerPage() {
-            this.currentPage = 1;
-        },
+    {
+        sl: "02",
+        joinDate: "25 Jan 2024",
+        name: "Annette Black",
+        email: "redaniel@gmail.com",
+        department: "Design",
+        designation: "UI UX Designer",
+        status: "Inactive",
+        avatar: user2,
+        hidden: false,
     },
-    methods: {
-        toggleSelectAll() {
-            if (this.selectAll) {
-                this.selectedUsers = [...this.filteredUsers];
-            } else {
-                this.selectedUsers = [];
-            }
-        },
-        hideUser(user) {
-            user.hidden = true;
-        },
-        prevPage() {
-            if (this.currentPage > 1) this.currentPage--;
-        },
-        nextPage() {
-            if (this.currentPage < this.totalPages) this.currentPage++;
-        },
-        changePage(page) {
-            if (page >= 1 && page <= this.totalPages) {
-                this.currentPage = page;
-            }
+    {
+        sl: "03",
+        joinDate: "10 Feb 2024",
+        name: "Ronald Richards",
+        email: "seannand@mail.ru",
+        department: "Design",
+        designation: "UI UX Designer",
+        status: "Active",
+        avatar: user3,
+        hidden: false,
+    },
+    {
+        sl: "04",
+        joinDate: "10 Feb 2024",
+        name: "Eleanor Pena",
+        email: "miyokoto@mail.ru",
+        department: "Design",
+        designation: "UI UX Designer",
+        status: "Active",
+        avatar: user4,
+        hidden: false,
+    },
+    {
+        sl: "05",
+        joinDate: "15 March 2024",
+        name: "Leslie Alexander",
+        email: "icadahli@gmail.com",
+        department: "Design",
+        designation: "UI UX Designer",
+        status: "Inactive",
+        avatar: user5,
+        hidden: false,
+    },
+    {
+        sl: "06",
+        joinDate: "15 March 2024",
+        name: "Albert Flores",
+        email: "warn@mail.ru",
+        department: "Design",
+        designation: "UI UX Designer",
+        status: "Active",
+        avatar: user6,
+        hidden: false,
+    },
+    {
+        sl: "07",
+        joinDate: "27 April 2024",
+        name: "Jacob Jones",
+        email: "zitka@mail.ru",
+        department: "Development",
+        designation: "Frontend developer",
+        status: "Active",
+        avatar: user7,
+        hidden: false,
+    },
+    {
+        sl: "08",
+        joinDate: "25 Jan 2024",
+        name: "Jerome Bell",
+        email: "igerrin@gmail.com",
+        department: "Development",
+        designation: "Frontend developer",
+        status: "Inactive",
+        avatar: user8,
+        hidden: false,
+    },
+    {
+        sl: "09",
+        joinDate: "30 April 2024",
+        name: "Marvin McKinney",
+        email: "maka@yandex.ru",
+        department: "Development",
+        designation: "Frontend developer",
+        status: "Active",
+        avatar: user2,
+        hidden: false,
+    },
+    {
+        sl: "10",
+        joinDate: "30 April 2024",
+        name: "Cameron Williamson",
+        email: "danten@mail.ru",
+        department: "Development",
+        designation: "Frontend developer",
+        status: "Active",
+        avatar: user10,
+        hidden: false,
+    },
+    {
+        sl: "11",
+        joinDate: "30 April 2024",
+        name: "Marvin McKinney",
+        email: "maka@yandex.ru",
+        department: "Development",
+        designation: "Frontend developer",
+        status: "Active",
+        avatar: user2,
+        hidden: false,
+    },
+]);
+
+const selectedUsers = ref([]);
+const searchQuery = ref('');
+const selectedStatus = ref('Status');
+const entriesPerPage = ref(10);
+const currentPage = ref(1);
+
+// Computed properties
+const filteredUsers = computed(() => {
+    let filtered = users.value.filter(user => {
+        const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
+        const matchesStatus = selectedStatus.value === 'Status' || user.status === selectedStatus.value;
+        return matchesSearch && matchesStatus && !user.hidden;
+    });
+
+    const start = (currentPage.value - 1) * entriesPerPage.value;
+    return filtered.slice(start, start + entriesPerPage.value);
+});
+
+const totalEntries = computed(() => {
+    return users.value.filter(user => {
+        const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
+        const matchesStatus = selectedStatus.value === 'Status' || user.status === selectedStatus.value;
+        return matchesSearch && matchesStatus && !user.hidden;
+    }).length;
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(totalEntries.value / entriesPerPage.value);
+});
+
+const startIndex = computed(() => {
+    return (currentPage.value - 1) * entriesPerPage.value + 1;
+});
+
+const endIndex = computed(() => {
+    return Math.min(startIndex.value + entriesPerPage.value - 1, totalEntries.value);
+});
+
+const selectAll = computed({
+    get() {
+        return filteredUsers.value.length > 0 &&
+            selectedUsers.value.length === filteredUsers.value.length;
+    },
+    set(value) {
+        if (value) {
+            selectedUsers.value = [...filteredUsers.value];
+        } else {
+            selectedUsers.value = [];
         }
+    }
+});
+
+// Watch for changes
+watch(searchQuery, () => {
+    currentPage.value = 1;
+});
+
+watch(selectedStatus, () => {
+    currentPage.value = 1;
+});
+
+watch(entriesPerPage, () => {
+    currentPage.value = 1;
+});
+
+// Methods
+const toggleSelectAll = () => {
+    if (selectAll.value) {
+        selectedUsers.value = [...filteredUsers.value];
+    } else {
+        selectedUsers.value = [];
+    }
+};
+
+const hideUser = (user) => {
+    user.hidden = true;
+};
+
+const prevPage = () => {
+    if (currentPage.value > 1) currentPage.value--;
+};
+
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) currentPage.value++;
+};
+
+const changePage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
     }
 };
 </script>

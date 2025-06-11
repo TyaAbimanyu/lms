@@ -10,15 +10,10 @@
         
     </div>
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
 import AddUser from '@/components/Users/AddUser.vue'
 
-export default {
-  name: "AddUsers",
-  components: {
-    Breadcrumb,
-    AddUser,
-  },
-}
+// Define component name
+const componentName = "AddUsers";
 </script>

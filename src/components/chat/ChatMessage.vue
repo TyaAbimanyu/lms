@@ -87,83 +87,86 @@
     </div>
   </template>
   
-  <script>
-  import chatUser from "@/assets/images/chat/11.png"
-  export default {
-    data() {
-      return {
-        user: {
-          name: "Kathryn Murphy",
-          status: "Available",
-          avatar: chatUser
-        },
-        actionButtons: [
-          { type: "call", icon: "mi:call" },
-          { type: "video", icon: "fluent:video-32-regular" }
-        ],
-        menuAction: {
-          type: "menu",
-          options: [
-            {
-              label: "Clear All",
-              icon: "mdi:clear-circle-outline",
-              action: "clear"
-            },
-            {
-              label: "Block",
-              icon: "ic:baseline-block",
-              action: "block"
-            }
-          ]
-        },
-        messages: [
-          {
-            id: 1,
-            from: "Kathryn Murphy",
-            side: "left",
-            avatar: chatUser,
-            text:
-              "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.",
-            time: "6.30 pm"
-          },
-          {
-            id: 2,
-            from: "Me",
-            side: "right",
-            text:
-              "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.",
-            time: "6.30 pm"
-          },
-          {
-            id: 3,
-            from: "Kathryn Murphy",
-            side: "left",
-            avatar: chatUser,
-            text:
-              "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default.Contrary to popular belief, Lorem Ipsum is not simply random text is the model text for your company.",
-            time: "6.30 pm"
-          }
-        ],
-        newMessage: ""
-      };
+<script setup>
+import chatUser from "@/assets/images/chat/11.png";
+import { ref, reactive } from 'vue';
+
+// Define component name
+const componentName = 'ChatMessage';
+
+// Reactive data
+const user = reactive({
+  name: "Kathryn Murphy",
+  status: "Available",
+  avatar: chatUser
+});
+
+const actionButtons = reactive([
+  { type: "call", icon: "mi:call" },
+  { type: "video", icon: "fluent:video-32-regular" }
+]);
+
+const menuAction = reactive({
+  type: "menu",
+  options: [
+    {
+      label: "Clear All",
+      icon: "mdi:clear-circle-outline",
+      action: "clear"
     },
-    methods: {
-      sendMessage() {
-        if (this.newMessage.trim()) {
-          this.messages.push({
-            id: this.messages.length + 1,
-            from: "Me",
-            side: "right",
-            text: this.newMessage.trim(),
-            time: new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit"
-            })
-          });
-          this.newMessage = "";
-        }
-      }
+    {
+      label: "Block",
+      icon: "ic:baseline-block",
+      action: "block"
     }
-  };
-  </script>
-  
+  ]
+});
+
+const messages = ref([
+  {
+    id: 1,
+    from: "Kathryn Murphy",
+    side: "left",
+    avatar: chatUser,
+    text:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.",
+    time: "6.30 pm"
+  },
+  {
+    id: 2,
+    from: "Me",
+    side: "right",
+    text:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.",
+    time: "6.30 pm"
+  },
+  {
+    id: 3,
+    from: "Kathryn Murphy",
+    side: "left",
+    avatar: chatUser,
+    text:
+      "The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default.Contrary to popular belief, Lorem Ipsum is not simply random text is the model text for your company.",
+    time: "6.30 pm"
+  }
+]);
+
+const newMessage = ref("");
+
+// Methods
+const sendMessage = () => {
+  if (newMessage.value.trim()) {
+    messages.value.push({
+      id: messages.value.length + 1,
+      from: "Me",
+      side: "right",
+      text: newMessage.value.trim(),
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
+    });
+    newMessage.value = "";
+  }
+};
+</script>

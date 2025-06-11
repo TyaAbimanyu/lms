@@ -8,15 +8,10 @@
         <PaginationData />
     </div>
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
 import PaginationData from '@/components/UiComponent/PaginationData.vue'
 
-export default {
-    name: "Pagination",
-    components: {
-        Breadcrumb,
-        PaginationData,
-    },
-}
+// Define component name
+const componentName = "Pagination";
 </script>

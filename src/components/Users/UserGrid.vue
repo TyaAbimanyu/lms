@@ -78,7 +78,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import user1 from "@/assets/images/user-grid/user-grid-img1.png"
 import user2 from "@/assets/images/user-grid/user-grid-img2.png"
 import user3 from "@/assets/images/user-grid/user-grid-img3.png"
@@ -106,65 +106,70 @@ import userBg11 from "@/assets/images/user-grid/user-grid-bg11.png"
 import userBg12 from "@/assets/images/user-grid/user-grid-bg12.png"
 
 import Pagination from '@/components/pagination/index.vue'
+import { ref, computed } from 'vue';
 
-export default {
-    name: "UserGrid",
-    components: { Pagination },
-    data() {
-        return {
-            users: [
-                { id: 1, name: "Jacob Jones", email: "ifrandom@gmail.com", img: user1, bgImage: userBg1 },
-                { id: 2, name: "Darrell Steward", email: "ifrandom@gmail.com", img: user2, bgImage: userBg2 },
-                { id: 3, name: "Jerome Bell", email: "ifrandom@gmail.com", img: user3, bgImage: userBg3 },
-                { id: 4, name: "Eleanor Pena", email: "ifrandom@gmail.com", img: user4, bgImage: userBg4 },
-                { id: 5, name: "Ralph Edwards", email: "ifrandom@gmail.com", img: user5, bgImage: userBg5 },
-                { id: 6, name: "Annette Black", email: "ifrandom@gmail.com", img: user6, bgImage: userBg6 },
-                { id: 7, name: "Robert Fox", email: "ifrandom@gmail.com", img: user7, bgImage: userBg7 },
-                { id: 8, name: "Albert Flores", email: "ifrandom@gmail.com", img: user8, bgImage: userBg8 },
-                { id: 9, name: "Dianne Russell", email: "ifrandom@gmail.com", img: user9, bgImage: userBg9 },
-                { id: 10, name: "Esther Howard", email: "ifrandom@gmail.com", img: user10, bgImage: userBg10 },
-                { id: 11, name: "Marvin McKinney", email: "ifrandom@gmail.com", img: user11, bgImage: userBg11 },
-                { id: 12, name: "Guy Hawkins", email: "ifrandom@gmail.com", img: user12, bgImage: userBg12 },
-                { id: 13, name: "Annette Black", email: "ifrandom@gmail.com", img: user6, bgImage: userBg6 },
-            ],
-            searchQuery: "",
-            itemsPerPage: 12,
-            currentPage: 1
-        };
-    },
-    computed: {
-        filteredUsers() {
-            return this.users.filter(user => {
-                return user.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || user.email.toLowerCase().includes(this.searchQuery.toLowerCase());
-            });
-        },
-        totalEntries() {
-            return this.users.filter(user => {
-                const matchesSearch = user.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    user.email.toLowerCase().includes(this.searchQuery.toLowerCase());
-                const matchesStatus = this.selectedStatus === 'Status' || user.status === this.selectedStatus;
-                return matchesSearch && matchesStatus && !user.hidden;
-            }).length;
-        },
-        totalPages() {
-            return Math.ceil(this.filteredUsers.length / this.itemsPerPage);
-        },
-        startIndex() {
-            return (this.currentPage - 1) * this.itemsPerPage + 1;
-        },
-        endIndex() {
-            return Math.min(this.currentPage * this.itemsPerPage, this.filteredUsers.length);
-        }
-    },
-    methods: {
-        changePage(page) {
-            if (page >= 1 && page <= this.totalPages) {
-                this.currentPage = page;
-            }
-        },
-        deleteUser(userId) {
-            this.users = this.users.filter(user => user.id !== userId);
-        }
+// Define component name
+const componentName = "UserGrid";
+
+// Reactive data
+const users = ref([
+    { id: 1, name: "Jacob Jones", email: "ifrandom@gmail.com", img: user1, bgImage: userBg1 },
+    { id: 2, name: "Darrell Steward", email: "ifrandom@gmail.com", img: user2, bgImage: userBg2 },
+    { id: 3, name: "Jerome Bell", email: "ifrandom@gmail.com", img: user3, bgImage: userBg3 },
+    { id: 4, name: "Eleanor Pena", email: "ifrandom@gmail.com", img: user4, bgImage: userBg4 },
+    { id: 5, name: "Ralph Edwards", email: "ifrandom@gmail.com", img: user5, bgImage: userBg5 },
+    { id: 6, name: "Annette Black", email: "ifrandom@gmail.com", img: user6, bgImage: userBg6 },
+    { id: 7, name: "Robert Fox", email: "ifrandom@gmail.com", img: user7, bgImage: userBg7 },
+    { id: 8, name: "Albert Flores", email: "ifrandom@gmail.com", img: user8, bgImage: userBg8 },
+    { id: 9, name: "Dianne Russell", email: "ifrandom@gmail.com", img: user9, bgImage: userBg9 },
+    { id: 10, name: "Esther Howard", email: "ifrandom@gmail.com", img: user10, bgImage: userBg10 },
+    { id: 11, name: "Marvin McKinney", email: "ifrandom@gmail.com", img: user11, bgImage: userBg11 },
+    { id: 12, name: "Guy Hawkins", email: "ifrandom@gmail.com", img: user12, bgImage: userBg12 },
+    { id: 13, name: "Annette Black", email: "ifrandom@gmail.com", img: user6, bgImage: userBg6 },
+]);
+
+const searchQuery = ref("");
+const itemsPerPage = ref(12);
+const currentPage = ref(1);
+const selectedStatus = ref("Status");
+
+// Computed properties
+const filteredUsers = computed(() => {
+    return users.value.filter(user => {
+        return user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+               user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
+    });
+});
+
+const totalEntries = computed(() => {
+    return users.value.filter(user => {
+        const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
+        const matchesStatus = selectedStatus.value === 'Status' || user.status === selectedStatus.value;
+        return matchesSearch && matchesStatus && !user.hidden;
+    }).length;
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(filteredUsers.value.length / itemsPerPage.value);
+});
+
+const startIndex = computed(() => {
+    return (currentPage.value - 1) * itemsPerPage.value + 1;
+});
+
+const endIndex = computed(() => {
+    return Math.min(currentPage.value * itemsPerPage.value, filteredUsers.value.length);
+});
+
+// Methods
+const changePage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
     }
+};
+
+const deleteUser = (userId) => {
+    users.value = users.value.filter(user => user.id !== userId);
 };
 </script>
