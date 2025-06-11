@@ -216,16 +216,23 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.css";
+import { ref, onMounted } from 'vue';
 
-export default {
-    name: "Form",
-    mounted() {
-        flatpickr(this.$refs.flatpickrDate, {
+// Define component name
+const componentName = "Form";
+
+// Create ref for flatpickr
+const flatpickrDate = ref(null);
+
+// Setup flatpickr on component mount
+onMounted(() => {
+    if (flatpickrDate.value) {
+        flatpickr(flatpickrDate.value, {
             dateFormat: "m/d/Y",
         });
-    },
-};
+    }
+});
 </script>

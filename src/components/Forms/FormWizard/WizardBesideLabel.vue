@@ -155,65 +155,66 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      currentStep: 0,
-      submitted: false,
-      steps: [
-        'Order Details',
-        'Manufactures',
-        'Order Plan',
-        'Completed'
-      ],
-      form: {
-        // Step 0
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+<script setup>
+import { ref, reactive } from 'vue';
 
-        // Step 1
-        username: '',
-        accountCardNumber: '',
-        cardExpiration: '',
-        cardCVV: '',
-        accountPassword: '',
+// Define component name
+const componentName = 'WizardBesideLabel';
 
-        // Step 2
-        bankName: '',
-        branchName: '',
-        accountName: '',
-        accountNumber: '',
-      }
-    };
-  },
-  methods: {
-    nextStep() {
-      this.submitted = true;
+// Reactive state
+const currentStep = ref(0);
+const submitted = ref(false);
+const steps = ref([
+  'Order Details',
+  'Manufactures',
+  'Order Plan',
+  'Completed'
+]);
 
-      const stepFields = {
-        0: ['firstName', 'lastName', 'email', 'password', 'confirmPassword'],
-        1: ['username', 'cardNumber', 'cardExpiration', 'cardCVV', 'password'],
-        2: ['bankName', 'branchName', 'accountName', 'accountNumber'],
-      };
+const form = reactive({
+  // Step 0
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 
-      const requiredFields = stepFields[this.currentStep] || [];
-      const isValid = requiredFields.every(field => !!this.form[field]);
+  // Step 1
+  username: '',
+  accountCardNumber: '',
+  cardExpiration: '',
+  cardCVV: '',
+  accountPassword: '',
 
-      if (isValid && this.currentStep < this.steps.length - 1) {
-        this.currentStep++;
-        this.submitted = false;
-      }
-    },
+  // Step 2
+  bankName: '',
+  branchName: '',
+  accountName: '',
+  accountNumber: '',
+});
 
-    prevStep() {
-      if (this.currentStep > 0) {
-        this.currentStep--;
-      }
-    }
+// Methods
+const nextStep = () => {
+  submitted.value = true;
+
+  const stepFields = {
+    0: ['firstName', 'lastName', 'email', 'password', 'confirmPassword'],
+    1: ['username', 'cardNumber', 'cardExpiration', 'cardCVV', 'password'],
+    2: ['bankName', 'branchName', 'accountName', 'accountNumber'],
+  };
+
+  const requiredFields = stepFields[currentStep.value] || [];
+  const isValid = requiredFields.every(field => !!form[field]);
+
+  if (isValid && currentStep.value < steps.value.length - 1) {
+    currentStep.value++;
+    submitted.value = false;
+  }
+};
+
+const prevStep = () => {
+  if (currentStep.value > 0) {
+    currentStep.value--;
   }
 };
 </script>

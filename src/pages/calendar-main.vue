@@ -48,7 +48,8 @@
     </div>
   </template>
   
-  <script>
+  <script setup>
+  import { ref, onMounted } from 'vue';
   import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
   import CalendarSidebar from '@/components/calendar/CalendarSidebar.vue';
   import FullCalendar from '@fullcalendar/vue3';
@@ -56,64 +57,60 @@
   import timeGridPlugin from '@fullcalendar/timegrid';
   import interactionPlugin from '@fullcalendar/interaction';
   
-  export default {
-    name: 'Calendar',
-    components: {
-      Breadcrumb,
-      CalendarSidebar,
-      FullCalendar,
-    },
-    data() {
-      return {
-        currentView: 'dayGridMonth',
-        currentTitle: '',
-        calendarOptions: {
-          plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-          initialView: 'dayGridMonth',
-          editable: true,
-          selectable: true,
-          droppable: true,
-          nowIndicator: true,
-          slotMinTime: '06:00:00',
-          slotMaxTime: '20:00:00',
-          allDaySlot: false,
-          headerToolbar: false,
-          events: [
-            { title: 'Meeting', start: '2025-05-09T10:30:00', end: '2025-05-09T11:30:00', className: 'event-red' },
-            { title: 'Lunch', start: '2025-05-09T12:00:00', end: '2025-05-09T14:00:00', className: 'event-yellow' },
-            { title: 'Repeating Event', start: '2025-05-05T16:00:00', className: 'event-purple' },
-          ],
-          datesSet: this.updateTitle,
-          firstDay: 1,
-        },
-      };
-    },
-    methods: {
-      changeView(view) {
-        this.currentView = view;
-        this.$refs.fullCalendar.getApi().changeView(view);
-        this.updateTitle();
-      },
-      prev() {
-        this.$refs.fullCalendar.getApi().prev();
-        this.updateTitle();
-      },
-      next() {
-        this.$refs.fullCalendar.getApi().next();
-        this.updateTitle();
-      },
-      today() {
-        this.$refs.fullCalendar.getApi().today();
-        this.updateTitle();
-      },
-      updateTitle() {
-        this.currentTitle = this.$refs.fullCalendar.getApi().view.title;
-      },
-    },
-    mounted() {
-      this.updateTitle();
-    },
-  };
+  const fullCalendar = ref(null);
+  const currentView = ref('dayGridMonth');
+  const currentTitle = ref('');
+  
+  const calendarOptions = ref({
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    editable: true,
+    selectable: true,
+    droppable: true,
+    nowIndicator: true,
+    slotMinTime: '06:00:00',
+    slotMaxTime: '20:00:00',
+    allDaySlot: false,
+    headerToolbar: false,
+    events: [
+      { title: 'Meeting', start: '2025-05-09T10:30:00', end: '2025-05-09T11:30:00', className: 'event-red' },
+      { title: 'Lunch', start: '2025-05-09T12:00:00', end: '2025-05-09T14:00:00', className: 'event-yellow' },
+      { title: 'Repeating Event', start: '2025-05-05T16:00:00', className: 'event-purple' },
+    ],
+    datesSet: updateTitle,
+    firstDay: 1,
+  });
+  
+  function changeView(view) {
+    currentView.value = view;
+    fullCalendar.value.getApi().changeView(view);
+    updateTitle();
+  }
+  
+  function prev() {
+    fullCalendar.value.getApi().prev();
+    updateTitle();
+  }
+  
+  function next() {
+    fullCalendar.value.getApi().next();
+    updateTitle();
+  }
+  
+  function today() {
+    fullCalendar.value.getApi().today();
+    updateTitle();
+  }
+  
+  function updateTitle() {
+    if (fullCalendar.value) {
+      currentTitle.value = fullCalendar.value.getApi().view.title;
+    }
+  }
+  
+  onMounted(() => {
+    updateTitle();
+  });
   </script>
   
   <style scoped>
@@ -217,4 +214,3 @@
     border: 1px solid #ddd6fe;
   }
   </style>
-  

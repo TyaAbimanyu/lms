@@ -8,15 +8,10 @@
         <FormValidationData />
     </div>
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
-import FormValidationData from '@/components/Forms/FormValidation.vue'
+import FormValidationData from '@/components/Forms/FormValidation.vue';
 
-export default {
-    name: "FormValidation",
-    components: {
-        Breadcrumb,
-        FormValidationData,
-    },
-}
+// Define component name
+const componentName = "FormValidation";
 </script>

@@ -9,15 +9,10 @@
     </div>
 
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
 import InputFrom from '@/components/Forms/Form.vue'
 
-export default {
-    name: "Forms",
-    components: {
-        Breadcrumb,
-        InputFrom,
-    },
-}
+// Define component name
+const componentName = "Forms";
 </script>

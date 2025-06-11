@@ -228,70 +228,72 @@
 </template>
 
 
-<script>
-export default {
-    data() {
-        return {
-            currentStep: 0,
-            submitted: false,
-            steps: [
-                { label: 'Create Account' },
-                { label: 'Import Data' },
-                { label: 'Setup Privacy' },
-                { label: 'Add Location' },
-                { label: 'Completed' }
-            ],
-            form: {
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                username: '',
-                cardNumber: '',
-                cardExpiration: '',
-                cardCVV: '',
-                bankName: '',
-                branchName: '',
-                accountName: '',
-                accountNumber: '',
-                holderName: '',
-                cvcNumber: '',
-                expiryDate: '',
-                expiryMonth: '',
-                expiryYear: ''
-                // add more fields as needed
-            }
-        };
-    },
-    methods: {
-        nextStep() {
-            this.submitted = true;
+<script setup>
+import { ref, reactive } from 'vue';
 
-            const stepFields = {
-                0: ['firstName', 'lastName', 'email', 'password', 'confirmPassword'],
-                1: ['username', 'cardNumber', 'cardExpiration', 'cardCVV', 'password'],
-                2: ['bankName', 'branchName', 'accountName', 'accountNumber'],
-                3: ['holderName', 'cardNumber', 'cvcNumber', 'expiryDate', 'expiryMonth', 'expiryYear']
-            };
+// Define component name
+const componentName = 'NumberingWizardLabel';
 
-            const requiredFields = stepFields[this.currentStep] || [];
-            const isValid = requiredFields.every(field => !!this.form[field]);
+// Reactive state
+const currentStep = ref(0);
+const submitted = ref(false);
+const steps = ref([
+    { label: 'Create Account' },
+    { label: 'Import Data' },
+    { label: 'Setup Privacy' },
+    { label: 'Add Location' },
+    { label: 'Completed' }
+]);
 
-            if (isValid && this.currentStep < this.steps.length - 1) {
-                this.currentStep++;
-                this.submitted = false;
-            }
-        },
+const form = reactive({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    username: '',
+    cardNumber: '',
+    cardExpiration: '',
+    cardCVV: '',
+    bankName: '',
+    branchName: '',
+    accountName: '',
+    accountNumber: '',
+    holderName: '',
+    cvcNumber: '',
+    expiryDate: '',
+    expiryMonth: '',
+    expiryYear: ''
+    // add more fields as needed
+});
 
-        prevStep() {
-            if (this.currentStep > 0) {
-                this.currentStep--;
-            }
-        }
+// Methods
+const nextStep = () => {
+    submitted.value = true;
+
+    const stepFields = {
+        0: ['firstName', 'lastName', 'email', 'password', 'confirmPassword'],
+        1: ['username', 'cardNumber', 'cardExpiration', 'cardCVV', 'password'],
+        2: ['bankName', 'branchName', 'accountName', 'accountNumber'],
+        3: ['holderName', 'cardNumber', 'cvcNumber', 'expiryDate', 'expiryMonth', 'expiryYear']
+    };
+
+    const requiredFields = stepFields[currentStep.value] || [];
+    const isValid = requiredFields.every(field => !!form[field]);
+
+    if (isValid && currentStep.value < steps.value.length - 1) {
+        currentStep.value++;
+        submitted.value = false;
+    }
+};
+
+const prevStep = () => {
+    if (currentStep.value > 0) {
+        currentStep.value--;
     }
 };
 </script>
+
 <style scoped>
 .form-wizard-list__item.active .count {
     color: #007bff;

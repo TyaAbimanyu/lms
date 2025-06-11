@@ -12,21 +12,13 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
-import NumberingWizard from '@/components/Forms/FormWizard/NumberingWizard.vue'
-import NumberingWizardLabel from '@/components/Forms/FormWizard/NumberingWizardLabel.vue'
-import OrderFollowingStep from '@/components/Forms/FormWizard/OrderFollowingStep.vue'
-import WizardBesideLabel from '@/components/Forms/FormWizard/WizardBesideLabel.vue'
+import NumberingWizard from '@/components/Forms/FormWizard/NumberingWizard.vue';
+import NumberingWizardLabel from '@/components/Forms/FormWizard/NumberingWizardLabel.vue';
+import OrderFollowingStep from '@/components/Forms/FormWizard/OrderFollowingStep.vue';
+import WizardBesideLabel from '@/components/Forms/FormWizard/WizardBesideLabel.vue';
 
-export default {
-    name: "FormWizard",
-    components: {
-        Breadcrumb,
-        NumberingWizard,
-        NumberingWizardLabel,
-        OrderFollowingStep,
-        WizardBesideLabel,
-    },
-}
+// Define component name
+const componentName = "FormWizard";
 </script>

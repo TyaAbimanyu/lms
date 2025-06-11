@@ -9,15 +9,10 @@
     </div>
 
 </template>
-<script>
+<script setup>
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue';
-import InputLayout from '@/components/Forms/InputLayout.vue'
+import InputLayout from '@/components/Forms/InputLayout.vue';
 
-export default {
-    name: "FormsLayout",
-    components: {
-        Breadcrumb,
-        InputLayout,
-    },
-}
+// Define component name
+const componentName = "FormsLayout";
 </script>

@@ -70,12 +70,12 @@
             <div class="row">
               <div class="col-12 mb-20">
                 <label class="form-label fw-semibold text-primary-light text-sm mb-8">Event Title : </label>
-                <input type="text" class="form-control radius-8" placeholder="Enter Event Title " />
+                <input type="text" class="form-control radius-8" placeholder="Enter Event Title " v-model="eventData.title" />
               </div>
               <div class="col-md-6 mb-20">
                 <label for="startDate" class="form-label fw-semibold text-primary-light text-sm mb-8">Start Date</label>
                 <div class="position-relative">
-                  <input class="form-control radius-8 bg-base" ref="startDate" type="text" v-model="event.startDate"
+                  <input class="form-control radius-8 bg-base" ref="startDate" type="text" v-model="eventData.startDate"
                     placeholder="03/12/2024, 10:30 AM" />
                   <span class="position-absolute end-0 top-50 translate-middle-y me-12 line-height-1">
                     <iconify-icon icon="solar:calendar-linear" class="icon text-lg"></iconify-icon>
@@ -85,7 +85,7 @@
               <div class="col-md-6 mb-20">
                 <label for="endDate" class="form-label fw-semibold text-primary-light text-sm mb-8">End Date</label>
                 <div class="position-relative">
-                  <input class="form-control radius-8 bg-base" ref="endDate" type="text" v-model="event.endDate"
+                  <input class="form-control radius-8 bg-base" ref="endDate" type="text" v-model="eventData.endDate"
                     placeholder="03/12/2024, 2:30 PM" />
                   <span class="position-absolute end-0 top-50 translate-middle-y me-12 line-height-1">
                     <iconify-icon icon="solar:calendar-linear" class="icon text-lg"></iconify-icon>
@@ -98,7 +98,7 @@
                 <label class="form-label fw-semibold text-primary-light text-sm mb-8">Label</label>
                 <div class="d-flex align-items-center flex-wrap gap-28">
                   <div class="form-check checked-success d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="Personal" />
+                    <input class="form-check-input" type="radio" name="label" id="Personal" v-model="eventData.label" value="Personal" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="Personal">
@@ -107,7 +107,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-primary d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="Business" />
+                    <input class="form-check-input" type="radio" name="label" id="Business" v-model="eventData.label" value="Business" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="Business">
@@ -116,7 +116,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-warning d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="Family" />
+                    <input class="form-check-input" type="radio" name="label" id="Family" v-model="eventData.label" value="Family" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="Family">
@@ -125,7 +125,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-secondary d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="Important" />
+                    <input class="form-check-input" type="radio" name="label" id="Important" v-model="eventData.label" value="Important" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="Important">
@@ -134,7 +134,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-danger d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="Holiday" />
+                    <input class="form-check-input" type="radio" name="label" id="Holiday" v-model="eventData.label" value="Holiday" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="Holiday">
@@ -147,7 +147,7 @@
 
               <div class="col-12 mb-20">
                 <label for="desc" class="form-label fw-semibold text-primary-light text-sm mb-8">Description</label>
-                <textarea class="form-control" id="desc" rows="4" cols="50" placeholder="Write some text"></textarea>
+                <textarea class="form-control" id="desc" rows="4" cols="50" placeholder="Write some text" v-model="eventData.description"></textarea>
               </div>
 
               <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
@@ -155,7 +155,7 @@
                   class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-40 py-11 radius-8">
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-primary border border-primary-600 text-md px-24 py-12 radius-8">
+                <button type="submit" @click="saveEvent" class="btn btn-primary border border-primary-600 text-md px-24 py-12 radius-8">
                   Save
                 </button>
               </div>
@@ -218,7 +218,7 @@
             <div class="row">
               <div class="col-12 mb-20">
                 <label class="form-label fw-semibold text-primary-light text-sm mb-8">Event Title : </label>
-                <input type="text" class="form-control radius-8" placeholder="Enter Event Title " />
+                <input type="text" class="form-control radius-8" placeholder="Enter Event Title " v-model="editEventData.title" />
               </div>
 
               <div class="col-md-6 mb-20">
@@ -226,7 +226,7 @@
                   Date</label>
                 <div class="position-relative">
                   <input class="form-control radius-8 bg-base" id="editstartDate" type="text"
-                    placeholder="03/12/2024, 10:30 AM" />
+                    placeholder="03/12/2024, 10:30 AM" v-model="editEventData.startDate" />
                   <span class="position-absolute end-0 top-50 translate-middle-y me-12 line-height-1">
                     <iconify-icon icon="solar:calendar-linear" class="icon text-lg"></iconify-icon>
                   </span>
@@ -237,7 +237,7 @@
                 <label class="form-label fw-semibold text-primary-light text-sm mb-8" for="editendDate">End Date</label>
                 <div class="position-relative">
                   <input class="form-control radius-8 bg-base" id="editendDate" type="text"
-                    placeholder="03/12/2024, 2:30 PM" />
+                    placeholder="03/12/2024, 2:30 PM" v-model="editEventData.endDate" />
                   <span class="position-absolute end-0 top-50 translate-middle-y me-12 line-height-1">
                     <iconify-icon icon="solar:calendar-linear" class="icon text-lg"></iconify-icon>
                   </span>
@@ -249,7 +249,7 @@
                 <label class="form-label fw-semibold text-primary-light text-sm mb-8">Label</label>
                 <div class="d-flex align-items-center flex-wrap gap-28">
                   <div class="form-check checked-success d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="editPersonal" />
+                    <input class="form-check-input" type="radio" name="label" id="editPersonal" v-model="editEventData.label" value="Personal" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="editPersonal">
@@ -258,7 +258,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-primary d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="editBusiness" />
+                    <input class="form-check-input" type="radio" name="label" id="editBusiness" v-model="editEventData.label" value="Business" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="editBusiness">
@@ -267,7 +267,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-warning d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="editFamily" />
+                    <input class="form-check-input" type="radio" name="label" id="editFamily" v-model="editEventData.label" value="Family" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="editFamily">
@@ -276,7 +276,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-secondary d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="editImportant" />
+                    <input class="form-check-input" type="radio" name="label" id="editImportant" v-model="editEventData.label" value="Important" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="editImportant">
@@ -285,7 +285,7 @@
                     </label>
                   </div>
                   <div class="form-check checked-danger d-flex align-items-center gap-2">
-                    <input class="form-check-input" type="radio" name="label" id="editHoliday" />
+                    <input class="form-check-input" type="radio" name="label" id="editHoliday" v-model="editEventData.label" value="Holiday" />
                     <label
                       class="form-check-label line-height-1 fw-medium text-secondary-light text-sm d-flex align-items-center gap-1"
                       for="editHoliday">
@@ -299,7 +299,7 @@
               <div class="col-12 mb-20">
                 <label class="form-label fw-semibold text-primary-light text-sm mb-8" for="editdesc">Description</label>
                 <textarea class="form-control" id="editdesc" rows="4" cols="50"
-                  placeholder="Write some text"></textarea>
+                  placeholder="Write some text" v-model="editEventData.description"></textarea>
               </div>
 
               <div class="d-flex align-items-center justify-content-center gap-3 mt-24">
@@ -307,7 +307,7 @@
                   class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-40 py-11 radius-8">
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-primary border border-primary-600 text-md px-24 py-12 radius-8">
+                <button type="submit" @click="updateEvent" class="btn btn-primary border border-primary-600 text-md px-24 py-12 radius-8">
                   Save
                 </button>
               </div>
@@ -332,7 +332,7 @@
               class="w-50 border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-40 py-11 radius-8">
               Cancel
             </button>
-            <button type="button" class="w-50 btn btn-primary border border-primary-600 text-md px-24 py-12 radius-8">
+            <button type="button" @click="deleteEvent" class="w-50 btn btn-primary border border-primary-600 text-md px-24 py-12 radius-8">
               Delete
             </button>
           </div>
@@ -343,84 +343,105 @@
 
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.css";
-export default {
-  data() {
-    return {
-      events: [
-        {
-          color: 'bg-warning-600',
-          time: 'Today, 10:30 PM - 02:30 AM',
-          name: 'Design Conference'
-        },
-        {
-          color: 'bg-success-600',
-          time: 'Today, 10:30 PM - 02:30 AM',
-          name: 'Weekend Festival'
-        },
-        {
-          color: 'bg-info-600',
-          time: 'Today, 10:30 PM - 02:30 AM',
-          name: 'Design Conference'
-        },
-        {
-          color: 'bg-warning-600',
-          time: 'Today, 10:30 PM - 02:30 AM',
-          name: 'Ultra Europe 2019'
-        },
-        {
-          color: 'bg-warning-600',
-          time: 'Today, 10:30 PM - 02:30 AM',
-          name: 'Design Conference'
-        }
-      ],
-      event: {
-        title: "",
-        startDate: "",
-        endDate: "",
-        label: "",
-        description: "",
-      },
-    };
+
+const events = ref([
+  {
+    color: 'bg-warning-600',
+    time: 'Today, 10:30 PM - 02:30 AM',
+    name: 'Design Conference'
   },
-  mounted() {
-    flatpickr(this.$refs.startDate, {
+  {
+    color: 'bg-success-600',
+    time: 'Today, 10:30 PM - 02:30 AM',
+    name: 'Weekend Festival'
+  },
+  {
+    color: 'bg-info-600',
+    time: 'Today, 10:30 PM - 02:30 AM',
+    name: 'Design Conference'
+  },
+  {
+    color: 'bg-warning-600',
+    time: 'Today, 10:30 PM - 02:30 AM',
+    name: 'Ultra Europe 2019'
+  },
+  {
+    color: 'bg-warning-600',
+    time: 'Today, 10:30 PM - 02:30 AM',
+    name: 'Design Conference'
+  }
+]);
+
+const eventData = ref({
+  title: "",
+  startDate: "",
+  endDate: "",
+  label: "",
+  description: "",
+});
+
+const editEventData = ref({
+  title: "",
+  startDate: "",
+  endDate: "",
+  label: "",
+  description: "",
+});
+
+const startDate = ref(null);
+const endDate = ref(null);
+
+function saveEvent() {
+  console.log("Event Saved:", eventData.value);
+  // Implementation for saving the event
+}
+
+function updateEvent() {
+  console.log("Event Updated:", editEventData.value);
+  // Implementation for updating the event
+}
+
+function deleteEvent() {
+  console.log("Event Deleted");
+  // Implementation for deleting the event
+}
+
+function closeModal() {
+  const modal = document.getElementById("exampleModal");
+  const bootstrapModal = new bootstrap.Modal(modal);
+  bootstrapModal.hide();
+}
+
+onMounted(() => {
+  flatpickr(startDate.value, {
+    enableTime: true,
+    dateFormat: "m/d/Y, h:i K",
+  });
+
+  flatpickr(endDate.value, {
+    enableTime: true,
+    dateFormat: "m/d/Y, h:i K",
+  });
+
+  const editStart = document.getElementById("editstartDate");
+  const editEnd = document.getElementById("editendDate");
+
+  if (editStart) {
+    flatpickr(editStart, {
       enableTime: true,
       dateFormat: "m/d/Y, h:i K",
     });
+  }
 
-    flatpickr(this.$refs.endDate, {
+  if (editEnd) {
+    flatpickr(editEnd, {
       enableTime: true,
       dateFormat: "m/d/Y, h:i K",
     });
-    const editStart = document.getElementById("editstartDate");
-    const editEnd = document.getElementById("editendDate");
-
-    if (editStart) {
-      flatpickr(editStart, {
-        enableTime: true,
-        dateFormat: "m/d/Y, h:i K",
-      });
-    }
-
-    if (editEnd) {
-      flatpickr(editEnd, {
-        enableTime: true,
-        dateFormat: "m/d/Y, h:i K",
-      });
-    }
-  },
-  methods: {
-    saveEvent() {
-      console.log("Event Saved:", this.event);
-    },
-    closeModal() {
-      const modal = document.getElementById("exampleModal");
-      const bootstrapModal = new bootstrap.Modal(modal);
-      bootstrapModal.hide();
-    },
-  },
-};
+  }
+});
 </script>

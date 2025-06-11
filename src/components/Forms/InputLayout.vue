@@ -224,9 +224,6 @@
     </div>
   </template>
   
-  <script>
-  export default {
-    name: 'FormComponent',
-  };
-  </script>
-  
+  <script setup>
+const componentName = 'FormComponent';
+</script>

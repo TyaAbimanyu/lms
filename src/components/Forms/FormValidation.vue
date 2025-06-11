@@ -141,23 +141,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted() {
-    const forms = document.querySelectorAll('.needs-validation');
-    forms.forEach(form => {
-      form.classList.remove('was-validated');
-    });
-  },
-  methods: {
-    handleSubmit(form) {
-      if (!form.checkValidity()) {
-        form.classList.add('was-validated');
-        return;
-      }
+<script setup>
+import { onMounted } from 'vue';
 
-      alert('Form submitted successfully!');
-    }
+// Remove was-validated class on mount
+onMounted(() => {
+  const forms = document.querySelectorAll('.needs-validation');
+  forms.forEach(form => {
+    form.classList.remove('was-validated');
+  });
+});
+
+// Form submission handler
+const handleSubmit = (form) => {
+  if (!form.checkValidity()) {
+    form.classList.add('was-validated');
+    return;
   }
+
+  alert('Form submitted successfully!');
 };
 </script>
